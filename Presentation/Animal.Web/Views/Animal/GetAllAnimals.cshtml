@@ -1,0 +1,28 @@
+﻿@model List<Entities.Animal>
+@{
+	ViewData["title"] = "get all animals";
+}
+
+<div>
+	<table class="table table-bordered table-striped">
+	<thead>
+		<th class="p-3">ID</thc>
+		<th class="p-3">Name</th>
+		<th class="p-3">Age</th>
+		<th class="p-3">categoryID</th>
+	</thead>
+
+	@{
+		foreach(var item in Model)
+		{
+			<tr>
+					<td class="p-3">@item.ID</td>
+					<td class="p-3">@item.Name</td>
+					<td class="p-3">@item.age</td>
+					<td class="p-3">@item.CategoryID</td>
+					<td class="p-3"><a class="nav-link text-dark" asp-area="" asp-controller="Animal" asp-action="GetAnimal" asp-route-id=@item.ID>view model</a></td>
+			</tr>
+		}
+	}
+	</table>
+</div>

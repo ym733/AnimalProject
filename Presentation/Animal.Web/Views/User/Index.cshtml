@@ -1,0 +1,24 @@
+﻿
+@{
+	ViewData["title"] = "user index page";
+}
+
+<div>
+	<ul>
+		<li class="nav-item h3">
+			<a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="GetAllUsers">GetAllUsers</a>
+		</li>
+		<li class="nav-item h3">
+			<a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="GetUser" asp-route-id="0">GetUser</a>
+		</li>
+		<li class="nav-item h3">
+			<a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="AddUser">AddUser</a>
+		</li>
+		<li class="nav-item h3">
+			<a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="UpdateUser">UpdateUser</a>
+		</li>
+		<li class="nav-item h3">
+			<a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="DeleteUser">DeleteUser</a>
+		</li>
+	</ul>
+</div>

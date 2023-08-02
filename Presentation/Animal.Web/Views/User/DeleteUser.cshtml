@@ -1,0 +1,14 @@
+﻿@{
+	ViewData["title"] = "delete user";
+}
+
+<div>
+	@using (Html.BeginForm("FormDeleteUser", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
+	{
+		<span>Enter ID: </span>
+		<input type="text" name="id" />
+		<br />
+		<br />
+		<input type="submit" value="Submit Form" />
+	}
+</div>

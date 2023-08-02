@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\ClassLibrary1\Core.csproj" />
+    <ProjectReference Include="..\..\Data\DataAccess\DataAccess.csproj" />
+    <ProjectReference Include="..\..\Data\Models\Entities.csproj" />
+    <ProjectReference Include="..\..\ViewModel\ViewModel.csproj" />
+  </ItemGroup>
+
+</Project>

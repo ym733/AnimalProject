@@ -1,0 +1,37 @@
+﻿@model Entities.Animal
+@{
+	ViewData["title"] = "Update Animal";
+}
+
+<div>
+	@using (Html.BeginForm("FormUpdateAnimal", "Animal", FormMethod.Post, new { enctype = "multipart/form-data" }))
+	{
+
+
+		<span>Enter ID: </span>
+		@Html.TextBoxFor(m => m.ID)
+
+		<br />
+		<br />
+
+		<span>Enter Name: </span>
+		@Html.TextBoxFor(m => m.Name)
+
+		<br />
+		<br />
+
+		<span>Enter Age: </span>
+		@Html.TextBoxFor(m => m.age)
+
+		<br />
+		<br />
+
+		<span>Enter CategoryID: </span>
+		@Html.TextBoxFor(m => m.CategoryID)
+
+		<br />
+		<br />
+
+		<input type="submit" value="Submit Form" />
+	}
+</div>

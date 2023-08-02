@@ -1,0 +1,22 @@
+﻿@model viewModel.CategoryType
+@{
+	ViewData["title"] = "add category type";
+}
+
+<div>
+	@using (Html.BeginForm("FormAddCategoryType", "CategoryType", FormMethod.Post, new { enctype = "multipart/form-data" }))
+	{
+		<span>Enter CategoryName: </span>
+		@Html.TextBoxFor(m => m.CategoryName)
+
+		<br />
+		<br />
+
+		@Html.TextBoxFor(m => m.files, new { type = "file" })
+
+		<br />
+		<br />
+
+		<input type="submit" value="Submit Form" />
+	}
+</div>

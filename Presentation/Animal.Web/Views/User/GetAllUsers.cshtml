@@ -1,0 +1,30 @@
+﻿@model List<Entities.User>
+@{
+	ViewData["title"] = "Get all users";
+}
+<div>
+	<table class="table table-bordered table-striped">
+		<thead>
+		<th class="p-3">Name</th>
+		<th class="p-3">Email</th>
+		<th class="p-3">Date of Birth</th>
+		<th class="p-3">role</th>
+		</thead>
+		@{
+			foreach(var item in Model)
+			{
+				<tr>
+					<td class="p-3">@item.Id</td>
+					<td class="p-3">@item.Name</td>
+					<td class="p-3">@item.Email</td>
+					<td class="p-3">@item.DateOfBirth</td>
+					<td class="p-3">@item.role</td>
+					<td class="p-3">
+						<a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="GetUser" asp-route-id=@item.Id>view model</a>
+					</td>
+
+				</tr>
+			}
+		}
+	</table>
+</div>

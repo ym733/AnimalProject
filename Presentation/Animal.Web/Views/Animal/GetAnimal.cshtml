@@ -1,0 +1,23 @@
+﻿@model Entities.Animal
+
+@{
+	ViewData["title"] = "get animal";
+}
+
+<div>
+	<table class="table table-bordered table-striped">
+	<tr>
+			<th class="p-3">ID</th>
+			<th class="p-3">Name</th>
+			<th class="p-3">Age</th>
+			<th class="p-3">CategoryID</th>
+	</tr>
+	
+	<tr>
+			<td class="p-3">@Model.ID</td>
+			<td class="p-3">@Model.Name</td>
+			<td class="p-3">@Model.age</td>
+			<td class="p-3">@Model.CategoryID</td>
+	</tr>
+	</table>
+</div>

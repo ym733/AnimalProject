@@ -1,0 +1,23 @@
+﻿@{
+	ViewData["title"] = "animal index page";
+}
+
+<div>
+	<ul>
+		<li class="nav-item h3">
+			<a class="nav-link text-dark" asp-area="" asp-controller="Animal" asp-action="GetAllAnimals">GetAllAnimals</a>
+		</li>
+		<li class="nav-item h3">
+			<a class="nav-link text-dark" asp-area="" asp-controller="Animal" asp-action="GetAnimal" asp-route-id="0">GetAnimal</a>
+		</li>
+		<li class="nav-item h3">
+			<a class="nav-link text-dark" asp-area="" asp-controller="Animal" asp-action="AddAnimal">AddAnimal</a>
+		</li>
+		<li class="nav-item h3">
+			<a class="nav-link text-dark" asp-area="" asp-controller="Animal" asp-action="UpdateAnimal">UpdateAnimal</a>
+		</li>
+		<li class="nav-item h3">
+			<a class="nav-link text-dark" asp-area="" asp-controller="Animal" asp-action="DeleteAnimal">DeleteAnimals</a>
+		</li>
+	</ul>
+</div>

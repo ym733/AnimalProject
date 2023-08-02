@@ -1,0 +1,13 @@
+﻿@model Entities.FileUpload
+@{
+	ViewData["title"] = "upload file";
+}
+<div>
+	@using (Html.BeginForm("FormUploadFile", "FileUpload", FormMethod.Post, new { enctype = "multipart/form-data" }))
+	{
+		@Html.AntiForgeryToken()
+		@Html.TextBoxFor(m => m.files, new { type = "file" })
+		<br /> <br />
+		<input type="submit" value="Submit Form" />
+	}
+</div>

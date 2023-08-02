@@ -1,0 +1,47 @@
+﻿@model viewModel.User
+@{
+	ViewData["title"] = "update user";
+}
+
+<div>
+	@using (Html.BeginForm("FormUpdateUser", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
+	{
+		<span>Enter ID: </span>
+		@Html.TextBoxFor(m => m.Id)
+
+		<br />
+		<br />
+
+		<span>Enter Name: </span>
+		@Html.TextBoxFor(m => m.Name)
+
+		<br />
+		<br />
+
+		<span>Enter Email: </span>
+		@Html.TextBoxFor(m => m.Email, new { @type = "email" })
+
+		<br />
+		<br />
+
+		<span>Enter Date of Birth: </span>
+		@Html.TextBoxFor(m => m.DateOfBirth, new { @type = "date" })
+
+		<br />
+		<br />
+
+		<span>Enter Password: </span>
+		@Html.PasswordFor(m => m.Password)
+
+		<br />
+		<br />
+
+		<span>Enter RoleID: </span>
+		@Html.TextBoxFor(m => m.roleID)
+
+		<br />
+		<br />
+
+		<input type="submit" value="Submit Form" />
+	}
+</div>

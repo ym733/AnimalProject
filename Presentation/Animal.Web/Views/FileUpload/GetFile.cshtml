@@ -1,0 +1,14 @@
+﻿@{
+	ViewData["title"] = "Get File";
+}
+
+<div>
+@using (Html.BeginForm("FormGetFile", "FileUpload", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+	<span>Enter File name: </span>
+	<input type="text" name="fileName" />
+	<br />
+	<br />
+	<input type="submit" value="Submit Form" />
+}
+</div>

@@ -1,0 +1,16 @@
+﻿@{
+	ViewData["title"] = "delete category type";
+}
+
+<div>
+	@using (Html.BeginForm("FormDeleteCategoryType", "CategoryType", FormMethod.Post, new { enctype = "multipart/form-data" }))
+	{
+		<span>Enter ID: </span>
+		<input type="text" name="id" />
+
+		<br />
+		<br />
+
+		<input type="submit" value="Submit Form" />
+	}
+</div>
