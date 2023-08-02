@@ -14,7 +14,6 @@
     <ProjectReference Include="..\..\Core\ClassLibrary1\Core.csproj" />
     <ProjectReference Include="..\..\Data\DataAccess\DataAccess.csproj" />
     <ProjectReference Include="..\..\Data\Models\Entities.csproj" />
-    <ProjectReference Include="..\..\ViewModel\ViewModel.csproj" />
   </ItemGroup>
 
 </Project>

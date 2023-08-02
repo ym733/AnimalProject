@@ -14,7 +14,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\ClassLibrary1\Core.csproj" />
-    <ProjectReference Include="..\..\ViewModel\ViewModel.csproj" />
     <ProjectReference Include="..\Models\Entities.csproj" />
   </ItemGroup>
 

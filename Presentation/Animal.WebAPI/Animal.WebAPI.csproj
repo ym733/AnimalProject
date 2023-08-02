@@ -33,7 +33,6 @@
     <ProjectReference Include="..\..\Data\DataAccess\DataAccess.csproj" />
     <ProjectReference Include="..\..\Data\Models\Entities.csproj" />
     <ProjectReference Include="..\..\Provider\AnimalProvider\AnimalProvider.csproj" />
-    <ProjectReference Include="..\..\ViewModel\ViewModel.csproj" />
   </ItemGroup>
 
 </Project>
