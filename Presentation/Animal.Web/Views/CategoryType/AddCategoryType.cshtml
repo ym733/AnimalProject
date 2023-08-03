@@ -1,11 +1,12 @@
 ﻿@model viewModel.CategoryType
 @{
-	ViewData["title"] = "add category type";
+	ViewData["title"] = "CategoryType";
 }
 
 <div>
-	@using (Html.BeginForm("FormAddCategoryType", "CategoryType", FormMethod.Post, new { enctype = "multipart/form-data" }))
+	@using (Html.BeginForm("AddCategoryType", "CategoryType", FormMethod.Post, new { enctype = "multipart/form-data" }))
 	{
+		@Html.AntiForgeryToken()
 		<span>Enter CategoryName: </span>
 		@Html.TextBoxFor(m => m.CategoryName)
 

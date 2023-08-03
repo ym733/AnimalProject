@@ -1,10 +1,11 @@
 ﻿@{
-	ViewData["title"] = "Delete Animal";
+	ViewData["title"] = "Animal";
 }
 
 <div>
-	@using (Html.BeginForm("FormDeleteAnimal", "Animal", FormMethod.Post, new { enctype = "multipart/form-data" }))
+	@using (Html.BeginForm("DeleteAnimal", "Animal", FormMethod.Post, new { enctype = "multipart/form-data" }))
 	{
+		@Html.AntiForgeryToken()
 		<span>Enter ID: </span>
 		<input type="text" name="id" />
 		<br />

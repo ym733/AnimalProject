@@ -21,6 +21,7 @@ namespace Animal.Web.Controllers
 			return View();
 		}
 
+		[HttpGet]
 		public IActionResult UploadFile()
 		{
 			return View();
@@ -28,7 +29,7 @@ namespace Animal.Web.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public IActionResult FormUploadFile(FileUpload fileUpload)
+		public IActionResult UploadFile(FileUpload fileUpload)
 		{
 			try
 			{
@@ -58,6 +59,7 @@ namespace Animal.Web.Controllers
 			}
 		}
 
+		[HttpGet]
 		public IActionResult GetFile()
 		{
 			return View();
@@ -65,7 +67,7 @@ namespace Animal.Web.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public IActionResult FormGetFile(string fileName)
+		public IActionResult GetFile(string fileName)
 		{
 			string path = _webHostEnvironment.ContentRootPath + "\\FileUploads\\"; 
 			string filePath = path + fileName; 

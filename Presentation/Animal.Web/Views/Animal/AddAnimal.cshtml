@@ -1,11 +1,12 @@
 ﻿@model Entities.Animal
 @{
-	ViewData["title"] = "add Animal";
+	ViewData["title"] = "Animal";
 }
 
 <div>
-	@using (Html.BeginForm("FormAddAnimal", "Animal", FormMethod.Post, new { enctype = "multipart/form-data" }))
+	@using (Html.BeginForm("AddAnimal", "Animal", FormMethod.Post, new { enctype = "multipart/form-data" }))
 	{
+		@Html.AntiForgeryToken()
 		<span>Enter Name: </span>
 		@Html.TextBoxFor(m => m.Name)
 

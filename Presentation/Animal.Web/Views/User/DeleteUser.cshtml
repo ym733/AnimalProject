@@ -1,10 +1,11 @@
 ﻿@{
-	ViewData["title"] = "delete user";
+	ViewData["title"] = "User";
 }
 
 <div>
-	@using (Html.BeginForm("FormDeleteUser", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
+	@using (Html.BeginForm("DeleteUser", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
 	{
+		@Html.AntiForgeryToken()
 		<span>Enter ID: </span>
 		<input type="text" name="id" />
 		<br />

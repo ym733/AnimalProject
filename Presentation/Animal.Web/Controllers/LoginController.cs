@@ -4,14 +4,8 @@ using System.Security.Claims;
 
 namespace Animal.Web.Controllers
 {
-	public class LoginController : Base.AuthorizationController
+	public class LoginController : Base.BaseController
 	{
-		private readonly IHttpContextAccessor _httpContextAccessor;
-		public LoginController(IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor)
-		{
-			_httpContextAccessor = httpContextAccessor;
-		}
-
 		[HttpGet]
 		public IActionResult Index()
 		{

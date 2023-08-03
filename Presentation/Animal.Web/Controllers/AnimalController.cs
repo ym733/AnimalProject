@@ -35,12 +35,15 @@ namespace Animal.Web.Controllers
 			return View(entityList);
 		}
 
+		[HttpGet]
         public IActionResult AddAnimal()
         {
             return View();
         }
 
-        public IActionResult FormAddAnimal(Entities.Animal animal)
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public IActionResult AddAnimal(Entities.Animal animal)
         {
             var obj = new AnimalProvider.Animal();
 			if (obj.addAnimal(animal))
@@ -53,12 +56,15 @@ namespace Animal.Web.Controllers
 			}
 		}
 
+		[HttpGet]
         public IActionResult UpdateAnimal()
         {
             return View();
         }
 
-        public IActionResult FormUpdateAnimal(Entities.Animal animal)
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public IActionResult UpdateAnimal(Entities.Animal animal)
         {
 			using var Obj = new AnimalProvider.Animal();
 
@@ -72,12 +78,15 @@ namespace Animal.Web.Controllers
 			}
 		}
 
+		[HttpGet]
         public IActionResult DeleteAnimal()
         {
             return View();
         }
 
-        public IActionResult FormDeleteAnimal(int id)
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public IActionResult DeleteAnimal(int id)
         {
 			using var obj = new AnimalProvider.Animal();
 

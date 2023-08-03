@@ -41,12 +41,15 @@ namespace Animal.Web.Controllers
 			return View(model);
 		}
 
+		[HttpGet]
 		public IActionResult addCategoryType()
 		{
 			return View();
 		}
 
-		public IActionResult FormAddCategoryType(viewModel.CategoryType CategoryType)
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public IActionResult AddCategoryType(viewModel.CategoryType CategoryType)
 		{
 			using var obj = new AnimalProvider.CategoryType();
 
@@ -95,12 +98,15 @@ namespace Animal.Web.Controllers
 			}
 		}
 
+		[HttpGet]
 		public IActionResult UpdateCategoryType()
 		{
 			return View();
 		}
 
-		public IActionResult FormUpdateCategoryType(viewModel.CategoryType CategoryType)
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public IActionResult UpdateCategoryType(viewModel.CategoryType CategoryType)
 		{
 			using var obj = new AnimalProvider.CategoryType();
 
@@ -153,12 +159,15 @@ namespace Animal.Web.Controllers
 			}
 		}
 
+		[HttpGet]
 		public IActionResult DeleteCategoryType()
 		{
 			return View();
 		}
 
-		public IActionResult FormDeleteCategoryType(int id)
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public IActionResult DeleteCategoryType(int id)
 		{
 			using var obj = new AnimalProvider.CategoryType();
 

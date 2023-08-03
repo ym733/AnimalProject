@@ -33,12 +33,15 @@ namespace Animal.Web.Controllers
 			return View(model);
 		}
 
+		[HttpGet]
 		public IActionResult AddUser()
 		{
 			return View();
 		}
 
-		public IActionResult FormAddUser(viewModel.User user)
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public IActionResult AddUser(viewModel.User user)
 		{
 			using var obj = new AnimalProvider.Users();
 			if (obj.addUser(user))
@@ -51,12 +54,15 @@ namespace Animal.Web.Controllers
 			}
 		}
 
+		[HttpGet]
 		public IActionResult UpdateUser() 
 		{ 
 			return View(); 
 		}
 
-		public IActionResult FormUpdateUser(viewModel.User user) 
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public IActionResult UpdateUser(viewModel.User user) 
 		{
 			using var obj = new AnimalProvider.Users();
 			if (obj.updateUser(user))
@@ -69,12 +75,15 @@ namespace Animal.Web.Controllers
 			}
 		}
 
+		[HttpGet]
 		public IActionResult DeleteUser()
 		{
 			return View();
 		}
 
-		public IActionResult FormDeleteUser(int id) 
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public IActionResult DeleteUser(int id) 
 		{
 			using var obj = new AnimalProvider.Users();
 			if (obj.deleteUser(id))

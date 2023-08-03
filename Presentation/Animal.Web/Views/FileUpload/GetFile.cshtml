@@ -1,10 +1,11 @@
 ﻿@{
-	ViewData["title"] = "Get File";
+	ViewData["title"] = "FileUpload";
 }
 
 <div>
-@using (Html.BeginForm("FormGetFile", "FileUpload", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("GetFile", "FileUpload", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
+		@Html.AntiForgeryToken()
 	<span>Enter File name: </span>
 	<input type="text" name="fileName" />
 	<br />
