@@ -1,0 +1,33 @@
+﻿@model ViewModel.Login
+@{
+	ViewData["title"] = "Login";
+}
+
+<div>
+	@using (Html.BeginForm("Index", "Login", FormMethod.Post, new { enctype = "multipart/form-data" }))
+	{
+		@Html.AntiForgeryToken
+
+		<br />
+		<br />
+
+		@Html.ValidationMessage("FormValidation")
+
+		<br />
+		<br />
+
+		<span>Enter Name: </span>
+		@Html.TextBoxFor(m => m.Name)
+
+		<br />
+		<br />
+
+		<span>Enter Password: </span>
+		@Html.PasswordFor(m => m.Password)
+
+		<br />
+		<br />
+
+		<input type="submit" value="Log in">
+	}
+</div>

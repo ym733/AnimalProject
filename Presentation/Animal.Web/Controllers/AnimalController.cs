@@ -2,9 +2,14 @@
 
 namespace Animal.Web.Controllers
 {
-    public class AnimalController : Controller
-    {
-        public IActionResult Index()
+    public class AnimalController : Base.AuthorizationController
+	{
+		private readonly IHttpContextAccessor _httpContextAccessor;
+		public AnimalController(IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor)
+		{
+			_httpContextAccessor = httpContextAccessor;
+		}
+		public IActionResult Index()
         {
             return View();
         }

@@ -1,17 +1,20 @@
 ﻿using Entities;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
 
 namespace Animal.Web.Controllers
 {
-	public class FileUploadController : Controller
+	public class FileUploadController : Base.AuthorizationController
 	{
 		public static IWebHostEnvironment _webHostEnvironment;
+		private readonly IHttpContextAccessor _httpContextAccessor;
 
-		public FileUploadController(IWebHostEnvironment webHostEnvironment)
+		public FileUploadController(IWebHostEnvironment webHostEnvironment, IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor)
 		{
 			_webHostEnvironment = webHostEnvironment;
+			_httpContextAccessor = httpContextAccessor;
 		}
 		public IActionResult Index()
 		{

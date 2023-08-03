@@ -1,9 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Animal.Web.Controllers
 {
-	public class UserController : Controller
+	public class UserController : Base.AuthorizationController
 	{
+		private readonly IHttpContextAccessor _httpContextAccessor;
+		public UserController(IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor)
+		{
+			_httpContextAccessor = httpContextAccessor;
+		}
 		public IActionResult Index()
 		{
 			return View();

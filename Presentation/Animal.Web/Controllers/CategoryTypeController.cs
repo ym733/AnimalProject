@@ -3,13 +3,16 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Animal.Web.Controllers
 {
-	public class CategoryTypeController : Controller
+	public class CategoryTypeController : Base.AuthorizationController
 	{
 		public static IWebHostEnvironment _webHostEnvironment;
+		private readonly IHttpContextAccessor _httpContextAccessor;
 
-		public CategoryTypeController(IWebHostEnvironment webHostEnvironment)
+
+		public CategoryTypeController(IWebHostEnvironment webHostEnvironment, IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor)
 		{
 			_webHostEnvironment = webHostEnvironment;
+			_httpContextAccessor = httpContextAccessor;
 		}
 
 		public IActionResult Index()
