@@ -48,11 +48,12 @@ namespace Animal.Web.Controllers
             var obj = new AnimalProvider.Animal();
 			if (obj.addAnimal(animal))
 			{
-				return View("AddAnimal");
+				return View();
 			}
 			else
 			{
-				return BadRequest("an error has occured");
+				ModelState.AddModelError("FormValidation", "an error has occured");
+				return View();
 			}
 		}
 
@@ -70,11 +71,12 @@ namespace Animal.Web.Controllers
 
 			if (Obj.updateAnimal(animal))
 			{
-				return View("UpdateAnimal");
+				return View();
 			}
 			else
 			{
-				return BadRequest("an error ahs occured");
+				ModelState.AddModelError("FormValidation", "an error has occured");
+				return View();
 			}
 		}
 
@@ -92,11 +94,12 @@ namespace Animal.Web.Controllers
 
 			if (obj.deleteAnimal(id))
 			{
-				return View("DeleteAnimal");
+				return View();
 			}
 			else
 			{
-				return BadRequest("an error has occured");
+				ModelState.AddModelError("FormValidation", "an error has occured");
+				return View();
 			}
 		}
     }

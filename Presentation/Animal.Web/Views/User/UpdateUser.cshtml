@@ -7,6 +7,8 @@
 	@using (Html.BeginForm("UpdateUser", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
 	{
 		@Html.AntiForgeryToken()
+		@Html.ValidationMessage("FormValidation")
+
 		<span>Enter ID: </span>
 		@Html.TextBoxFor(m => m.Id)
 

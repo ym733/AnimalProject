@@ -75,12 +75,14 @@ namespace Animal.Web.Controllers
 				}
 				else
 				{
-					return BadRequest("empty or no file sent");
+					ModelState.AddModelError("FormValidation", "empty or no file sent");
+					return View();
 				}
 			}
 			catch (Exception ex)
 			{
-				return BadRequest("an error has occured\n" + ex.Message);
+				ModelState.AddModelError("FormValidation", "an error has occured\n" + ex.Message);
+				return View();
 			}
 
 			Entities.CategoryType modelSent = new Entities.CategoryType();
@@ -90,11 +92,13 @@ namespace Animal.Web.Controllers
 
 			if (obj.addCategoryType(modelSent))
 			{
-				return View("AddCategoryType");
+				//Successful
+				return View();
 			}
 			else
 			{
-				return BadRequest("an error has occured");
+				ModelState.AddModelError("FormValidation", "an error has occured");
+				return View();
 			}
 		}
 
@@ -136,12 +140,14 @@ namespace Animal.Web.Controllers
 				}
 				else
 				{
-					return BadRequest("empty or no file sent");
+					ModelState.AddModelError("FormValidation", "empty or no file sent");
+					return View();
 				}
 			}
 			catch (Exception ex)
 			{
-				return BadRequest("an error has occured\n" + ex.Message);
+				ModelState.AddModelError("FormValidation", "an error has occured\n" + ex.Message);
+				return View();
 			}
 
 			Entities.CategoryType modelSent = new Entities.CategoryType();
@@ -151,11 +157,13 @@ namespace Animal.Web.Controllers
 
 			if (obj.updateCategoryType(modelSent))
 			{
-				return View("UpdateCategoryType");
+				//Successful
+				return View();
 			}
 			else
 			{
-				return BadRequest("an error ahs occured");
+				ModelState.AddModelError("FormValidation", "an error has occured");
+				return View();
 			}
 		}
 
@@ -173,11 +181,13 @@ namespace Animal.Web.Controllers
 
 			if (obj.deleteCategoryType(id))
 			{
-				return View("DeleteCategoryType");
+				//Successful
+				return View();
 			}
 			else
 			{
-				return BadRequest("an error has occured");
+				ModelState.AddModelError("FormValidation", "an error has occured");
+				return View();
 			}
 		}
 	}

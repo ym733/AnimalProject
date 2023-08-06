@@ -11,11 +11,22 @@ namespace viewModel
     public class User
     {
         public int Id { get; set; }
+
+        [Required]
         public string Name { get; set; }
-        public string Email { get; set; }
-        public string DateOfBirth { get; set; }
+
+		[Required]
+		public string Email { get; set; }
+
+		[Required]
+		public string DateOfBirth { get; set; }
+
+        [Required]
 		public string Password { get; set; }
-        public string? SaltHash { get; set; }
-        public int roleID { get; set; }
+
+		public string? SaltHash { get; set; }
+
+		[Required]
+		public int roleID { get; set; }
     }
 }

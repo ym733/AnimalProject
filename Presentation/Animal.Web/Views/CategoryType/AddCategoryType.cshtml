@@ -7,6 +7,8 @@
 	@using (Html.BeginForm("AddCategoryType", "CategoryType", FormMethod.Post, new { enctype = "multipart/form-data" }))
 	{
 		@Html.AntiForgeryToken()
+		@Html.ValidationMessage("FormValidation")
+
 		<span>Enter CategoryName: </span>
 		@Html.TextBoxFor(m => m.CategoryName)
 

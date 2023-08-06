@@ -46,16 +46,19 @@ namespace Animal.Web.Controllers
 						fileStream.Flush();
 						fileStream.Close();
 					}
-					return View("UploadFile");
+					//Successful
+					return View();
 				}
 				else
 				{
-					return BadRequest("File does not exist");
+					ModelState.AddModelError("FormValidation", "empty or no file sent");
+					return View();
 				}
 			}
 			catch (Exception ex)
 			{
-				return BadRequest("Error has occured");
+				ModelState.AddModelError("FormValidation", "an error has occured");
+				return View();
 			}
 		}
 
@@ -74,12 +77,14 @@ namespace Animal.Web.Controllers
 
 			if (System.IO.File.Exists(filePath)) 
 			{
+				//Successful
 				var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read); 
 				return new FileStreamResult(fileStream, "image/png"); 
 			}
 			else
 			{
-				return BadRequest("file does not exist");
+				ModelState.AddModelError("FormValidation", "file does not exist");
+				return View();
 			}
 		}
 	}

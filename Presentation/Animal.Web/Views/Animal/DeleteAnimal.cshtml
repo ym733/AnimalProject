@@ -6,6 +6,8 @@
 	@using (Html.BeginForm("DeleteAnimal", "Animal", FormMethod.Post, new { enctype = "multipart/form-data" }))
 	{
 		@Html.AntiForgeryToken()
+		@Html.ValidationMessage("FormValidation")
+
 		<span>Enter ID: </span>
 		<input type="text" name="id" />
 		<br />

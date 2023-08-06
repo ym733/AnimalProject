@@ -9,9 +9,9 @@ namespace ViewModel
 {
 	public class Login
 	{
-		[Required(ErrorMessage = "Field required")]
+		[Required]
 		public string Name { get; set; }
-		[Required(ErrorMessage = "Field required")]
+		[Required]
 		public string Password { get; set; }
 
 	}

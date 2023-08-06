@@ -7,6 +7,7 @@
 	@using (Html.BeginForm("UpdateAnimal", "Animal", FormMethod.Post, new { enctype = "multipart/form-data" }))
 	{
 		@Html.AntiForgeryToken()
+		@Html.ValidationMessage("FormValidation")
 
 		<span>Enter ID: </span>
 		@Html.TextBoxFor(m => m.ID)

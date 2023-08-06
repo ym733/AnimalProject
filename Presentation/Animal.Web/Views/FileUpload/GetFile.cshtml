@@ -3,13 +3,15 @@
 }
 
 <div>
-@using (Html.BeginForm("GetFile", "FileUpload", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
+	@using (Html.BeginForm("GetFile", "FileUpload", FormMethod.Post, new { enctype = "multipart/form-data" }))
+	{
 		@Html.AntiForgeryToken()
-	<span>Enter File name: </span>
-	<input type="text" name="fileName" />
-	<br />
-	<br />
-	<input type="submit" value="Submit Form" />
-}
+		@Html.ValidationMessage("FormValidation")
+
+		<span>Enter File name: </span>
+		<input type="text" name="fileName" />
+		<br />
+		<br />
+		<input type="submit" value="Submit Form" />
+	}
 </div>

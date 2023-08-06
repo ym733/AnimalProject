@@ -6,6 +6,8 @@
 	@using (Html.BeginForm("UploadFile", "FileUpload", FormMethod.Post, new { enctype = "multipart/form-data" }))
 	{
 		@Html.AntiForgeryToken()
+		@Html.ValidationMessage("FormValidation")
+
 		@Html.TextBoxFor(m => m.files, new { type = "file" })
 		<br /> <br />
 		<input type="submit" value="Submit Form" />

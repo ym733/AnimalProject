@@ -14,6 +14,8 @@ namespace viewModel
 
         [Required]
         public string CategoryName { get; set; }
+
+        [Required]
         public IFormFile files { get; set; }
     }
 }
