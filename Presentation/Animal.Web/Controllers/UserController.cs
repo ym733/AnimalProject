@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Animal.Web.Base;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Animal.Web.Controllers
@@ -33,6 +34,15 @@ namespace Animal.Web.Controllers
 			return View(model);
 		}
 
+		[CustomAuthorize("user", "admin", "superAdmin")]
+		public IActionResult GetCurrentUser()
+		{
+			int id = CurrentUser.Id;
+            var obj = new AnimalProvider.Users();
+            var model = obj.getUser(id);
+            return View("GetUser", model);
+        }
+
 		[HttpGet]
 		public IActionResult AddUser()
 		{
@@ -51,7 +61,7 @@ namespace Animal.Web.Controllers
 			else
 			{
 				ModelState.AddModelError("FormValidation", "an error has occured");
-				return View();
+				return View(user);
 			}
 		}
 
@@ -73,7 +83,7 @@ namespace Animal.Web.Controllers
 			else
 			{
 				ModelState.AddModelError("FormValidation", "an error has occured");
-				return View();
+				return View(user);
 			}
 		}
 
@@ -95,7 +105,7 @@ namespace Animal.Web.Controllers
 			else
 			{
 				ModelState.AddModelError("FormValidation", "an error has occured");
-				return View();
+				return View(id);
 			}
 		}
 	}

@@ -9,7 +9,7 @@ namespace Animal.Web.Controllers
 		[HttpGet]
 		public IActionResult Index()
 		{
-			return View(new ViewModel.Login());
+			return View();
 		}
 
 		[HttpPost]
@@ -23,11 +23,12 @@ namespace Animal.Web.Controllers
 				if (data == null)
 				{
 					ModelState.AddModelError("FormValidation", "Wrong Username or Password");
-					return View();
+					return View(model);
 				}
 
 				var varClaims = new ClaimsPrincipal(new ClaimsIdentity(new[]
 				{
+					new Claim("Id", data.Id.ToString()),
 					new Claim(ClaimTypes.Name, data.Name),
 					new Claim(ClaimTypes.Email, data.Email),
 					new Claim(ClaimTypes.DateOfBirth, data.DateOfBirth),
@@ -37,15 +38,24 @@ namespace Animal.Web.Controllers
 				var authProperties = new AuthenticationProperties
 				{
 					IsPersistent = true,
+					ExpiresUtc = DateTime.UtcNow.AddMinutes(2),
+					AllowRefresh = true,
 				};
 
 				await HttpContext.SignInAsync(varClaims, authProperties);
 			}
 			else
 			{
-				return View(model);
+                ModelState.AddModelError("FormValidation", "Data entered is Missing or Invalid");
+                return View(model);
 			}
 			return RedirectToAction("Index", "Home");
 		}
+
+		public async Task<IActionResult> Logout()
+		{
+			await HttpContext.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
 	}
 }

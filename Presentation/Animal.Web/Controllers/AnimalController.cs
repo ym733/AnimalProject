@@ -53,7 +53,7 @@ namespace Animal.Web.Controllers
 			else
 			{
 				ModelState.AddModelError("FormValidation", "an error has occured");
-				return View();
+				return View(animal);
 			}
 		}
 
@@ -76,7 +76,7 @@ namespace Animal.Web.Controllers
 			else
 			{
 				ModelState.AddModelError("FormValidation", "an error has occured");
-				return View();
+				return View(animal);
 			}
 		}
 
@@ -99,7 +99,7 @@ namespace Animal.Web.Controllers
 			else
 			{
 				ModelState.AddModelError("FormValidation", "an error has occured");
-				return View();
+				return View(id);
 			}
 		}
     }

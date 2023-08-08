@@ -3,7 +3,8 @@ using System.Security.Claims;
 
 namespace Animal.Web.Base
 {
-    public class AuthorizationController : BaseController
+	[CustomAuthorize("admin", "superAdmin")]
+	public class AuthorizationController : BaseController
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
         public Entities.User CurrentUser { get; set; }
@@ -27,7 +28,7 @@ namespace Animal.Web.Base
                         attribute.SetValue(CurrentUser, Convert.ChangeType(attributeValue, attribute.PropertyType));
                     }
                 }
-
+              
                 CurrentUser.Name = accessor.User.Identity.Name;
                 CurrentUser.Email = accessor.User.FindFirstValue(ClaimTypes.Email);
                 CurrentUser.DateOfBirth = accessor.User.FindFirstValue(ClaimTypes.DateOfBirth);

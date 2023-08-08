@@ -52,13 +52,13 @@ namespace Animal.Web.Controllers
 				else
 				{
 					ModelState.AddModelError("FormValidation", "empty or no file sent");
-					return View();
+					return View(fileUpload);
 				}
 			}
 			catch (Exception ex)
 			{
 				ModelState.AddModelError("FormValidation", "an error has occured");
-				return View();
+				return View(fileUpload);
 			}
 		}
 
@@ -84,7 +84,7 @@ namespace Animal.Web.Controllers
 			else
 			{
 				ModelState.AddModelError("FormValidation", "file does not exist");
-				return View();
+				return View(fileName);
 			}
 		}
 	}

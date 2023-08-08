@@ -8,6 +8,8 @@
 		@Html.AntiForgeryToken()
 		@Html.ValidationMessage("FormValidation")
 
+		<br />
+
 		@Html.TextBoxFor(m => m.files, new { type = "file" })
 		<br /> <br />
 		<input type="submit" value="Submit Form" />

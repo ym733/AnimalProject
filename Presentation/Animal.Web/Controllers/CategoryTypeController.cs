@@ -76,13 +76,13 @@ namespace Animal.Web.Controllers
 				else
 				{
 					ModelState.AddModelError("FormValidation", "empty or no file sent");
-					return View();
+					return View(CategoryType);
 				}
 			}
 			catch (Exception ex)
 			{
 				ModelState.AddModelError("FormValidation", "an error has occured\n" + ex.Message);
-				return View();
+				return View(CategoryType);
 			}
 
 			Entities.CategoryType modelSent = new Entities.CategoryType();
@@ -98,7 +98,7 @@ namespace Animal.Web.Controllers
 			else
 			{
 				ModelState.AddModelError("FormValidation", "an error has occured");
-				return View();
+				return View(CategoryType);
 			}
 		}
 
@@ -141,13 +141,13 @@ namespace Animal.Web.Controllers
 				else
 				{
 					ModelState.AddModelError("FormValidation", "empty or no file sent");
-					return View();
+					return View(CategoryType);
 				}
 			}
 			catch (Exception ex)
 			{
 				ModelState.AddModelError("FormValidation", "an error has occured\n" + ex.Message);
-				return View();
+				return View(CategoryType);
 			}
 
 			Entities.CategoryType modelSent = new Entities.CategoryType();
@@ -163,7 +163,7 @@ namespace Animal.Web.Controllers
 			else
 			{
 				ModelState.AddModelError("FormValidation", "an error has occured");
-				return View();
+				return View(CategoryType);
 			}
 		}
 
@@ -187,7 +187,7 @@ namespace Animal.Web.Controllers
 			else
 			{
 				ModelState.AddModelError("FormValidation", "an error has occured");
-				return View();
+				return View(id);
 			}
 		}
 	}
