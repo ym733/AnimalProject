@@ -2,7 +2,7 @@
 
 namespace Animal.Web.Controllers
 {
-    public class AnimalController : Base.AuthorizationController
+	public class AnimalController : Base.AuthorizationController
 	{
 		private readonly IHttpContextAccessor _httpContextAccessor;
 		public AnimalController(IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor)
@@ -10,25 +10,25 @@ namespace Animal.Web.Controllers
 			_httpContextAccessor = httpContextAccessor;
 		}
 		public IActionResult Index()
-        {
-            return View();
-        }
+		{
+			return View();
+		}
 
-        public IActionResult GetAnimal(int id)
-        {
-            if(id == 0) 
-            {
-                return View(new Entities.Animal());
-            }
+		public IActionResult GetAnimal(int id)
+		{
+			if (id == 0)
+			{
+				return View(new Entities.Animal());
+			}
 
-            var obj = new AnimalProvider.Animal();
-            Entities.Animal entity = obj.getAnimal(id);
+			var obj = new AnimalProvider.Animal();
+			Entities.Animal entity = obj.getAnimal(id);
 
-            return View(entity);
-        }
+			return View(entity);
+		}
 
-        public IActionResult GetAllAnimals()
-        {
+		public IActionResult GetAllAnimals()
+		{
 			var obj = new AnimalProvider.Animal();
 			List<Entities.Animal> entityList = obj.getAllAnimals();
 
@@ -36,71 +36,97 @@ namespace Animal.Web.Controllers
 		}
 
 		[HttpGet]
-        public IActionResult AddAnimal()
-        {
-            return View();
-        }
+		public IActionResult AddAnimal()
+		{
+			return View();
+		}
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public IActionResult AddAnimal(Entities.Animal animal)
-        {
-            var obj = new AnimalProvider.Animal();
-			if (obj.addAnimal(animal))
+		{
+			if (ModelState.IsValid)
 			{
-				return View();
+				var obj = new AnimalProvider.Animal();
+				if (obj.addAnimal(animal))
+				{
+					//Success
+					ModelState.AddModelError("FormValidation", "Success");
+					return View();
+				}
+				else
+				{
+					ModelState.AddModelError("FormValidation", "an error has occured");
+					return View(animal);
+				}
 			}
 			else
 			{
-				ModelState.AddModelError("FormValidation", "an error has occured");
 				return View(animal);
 			}
 		}
 
 		[HttpGet]
-        public IActionResult UpdateAnimal()
-        {
-            return View();
-        }
+		public IActionResult UpdateAnimal()
+		{
+			return View();
+		}
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public IActionResult UpdateAnimal(Entities.Animal animal)
-        {
-			using var Obj = new AnimalProvider.Animal();
-
-			if (Obj.updateAnimal(animal))
+		{
+			if (ModelState.IsValid)
 			{
-				return View();
+				using var Obj = new AnimalProvider.Animal();
+
+				if (Obj.updateAnimal(animal))
+				{
+					//Success
+					ModelState.AddModelError("FormValidation", "Success");
+					return View();
+				}
+				else
+				{
+					ModelState.AddModelError("FormValidation", "an error has occured");
+					return View(animal);
+				}
 			}
 			else
 			{
-				ModelState.AddModelError("FormValidation", "an error has occured");
 				return View(animal);
 			}
 		}
 
 		[HttpGet]
-        public IActionResult DeleteAnimal()
-        {
-            return View();
-        }
+		public IActionResult DeleteAnimal()
+		{
+			return View();
+		}
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public IActionResult DeleteAnimal(int id)
-        {
-			using var obj = new AnimalProvider.Animal();
-
-			if (obj.deleteAnimal(id))
+		{
+			if (ModelState.IsValid)
 			{
-				return View();
+				using var obj = new AnimalProvider.Animal();
+				if (obj.deleteAnimal(id))
+				{
+					//Success
+					ModelState.AddModelError("FormValidation", "Success");
+					return View();
+				}
+				else
+				{
+					ModelState.AddModelError("FormValidation", "an error has occured");
+					return View(id);
+				}
 			}
 			else
 			{
-				ModelState.AddModelError("FormValidation", "an error has occured");
 				return View(id);
 			}
 		}
-    }
+	}
 }

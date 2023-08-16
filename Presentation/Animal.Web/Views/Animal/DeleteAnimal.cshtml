@@ -1,4 +1,5 @@
-﻿@{
+﻿@using Animal.Web.MediaComponents
+@{
 	ViewData["title"] = "Animal";
 }
 
@@ -6,14 +7,10 @@
 	@using (Html.BeginForm("DeleteAnimal", "Animal", FormMethod.Post, new { enctype = "multipart/form-data" }))
 	{
 		@Html.AntiForgeryToken()
-		@Html.ValidationMessage("FormValidation")
+		<div>@Html.ValidationMessage("FormValidation")</div>
 
-		<br />
+		@Html.SingleStringInput("id")
 
-		<span>Enter ID: </span>
-		<input type="text" name="id" />
-		<br />
-		<br />
-		<input type="submit" value="Submit Form" />
+		@Html.SubmitButton("Submit form")
 	}
 </div>

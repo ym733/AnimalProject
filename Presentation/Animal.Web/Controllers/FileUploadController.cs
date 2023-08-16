@@ -31,33 +31,41 @@ namespace Animal.Web.Controllers
 		[ValidateAntiForgeryToken]
 		public IActionResult UploadFile(FileUpload fileUpload)
 		{
-			try
+			if (ModelState.IsValid)
 			{
-				if (fileUpload.files.Length > 0) 
+				try
 				{
-					string path = _webHostEnvironment.ContentRootPath + "\\FileUploads\\"; 
-					if (!Directory.Exists(path))
+					if (fileUpload.files.Length > 0)
 					{
-						Directory.CreateDirectory(path); 
+						string path = _webHostEnvironment.ContentRootPath + "\\FileUploads\\";
+						if (!Directory.Exists(path))
+						{
+							Directory.CreateDirectory(path);
+						}
+						using (FileStream fileStream = System.IO.File.Create(path + fileUpload.files.FileName))
+						{
+							fileUpload.files.CopyTo(fileStream);
+							fileStream.Flush();
+							fileStream.Close();
+						}
+						//Success
+						ModelState.AddModelError("FormValidation", "Success");
+						return View();
 					}
-					using (FileStream fileStream = System.IO.File.Create(path + fileUpload.files.FileName))
+					else
 					{
-						fileUpload.files.CopyTo(fileStream);
-						fileStream.Flush();
-						fileStream.Close();
+						ModelState.AddModelError("FormValidation", "empty or no file sent");
+						return View(fileUpload);
 					}
-					//Successful
-					return View();
 				}
-				else
+				catch (Exception ex)
 				{
-					ModelState.AddModelError("FormValidation", "empty or no file sent");
+					ModelState.AddModelError("FormValidation", "an error has occured");
 					return View(fileUpload);
 				}
 			}
-			catch (Exception ex)
+			else
 			{
-				ModelState.AddModelError("FormValidation", "an error has occured");
 				return View(fileUpload);
 			}
 		}
@@ -70,21 +78,29 @@ namespace Animal.Web.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public IActionResult GetFile(string fileName)
+		public IActionResult GetFile(string FileName)
 		{
-			string path = _webHostEnvironment.ContentRootPath + "\\FileUploads\\"; 
-			string filePath = path + fileName; 
-
-			if (System.IO.File.Exists(filePath)) 
+			if(ModelState.IsValid)
 			{
-				//Successful
-				var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read); 
-				return new FileStreamResult(fileStream, "image/png"); 
+				string path = _webHostEnvironment.ContentRootPath + "\\FileUploads\\";
+				string filePath = path + FileName;
+
+				if (System.IO.File.Exists(filePath))
+				{
+					//Success
+					ModelState.AddModelError("FormValidation", "Success");
+					var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+					return new FileStreamResult(fileStream, "image/png");
+				}
+				else
+				{
+					ModelState.AddModelError("FormValidation", "file does not exist");
+					return View(FileName);
+				}
 			}
 			else
 			{
-				ModelState.AddModelError("FormValidation", "file does not exist");
-				return View(fileName);
+				return View(FileName);
 			}
 		}
 	}

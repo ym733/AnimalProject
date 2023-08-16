@@ -1,4 +1,5 @@
-﻿@model viewModel.User
+﻿@model ViewModel.User
+@using Animal.Web.MediaComponents
 @{
 	ViewData["title"] = "User";
 }
@@ -7,46 +8,20 @@
 	@using (Html.BeginForm("UpdateUser", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
 	{
 		@Html.AntiForgeryToken()
-		@Html.ValidationMessage("FormValidation")
+		<div>@Html.ValidationMessage("FormValidation")</div>
 
-		<br />
+		@Html.TextInput(m=>m.Id)
 
-		<span>Enter ID: </span>
-		@Html.TextBoxFor(m => m.Id)
+		@Html.TextInput(m=>m.Name)
 
-		<br />
-		<br />
+		@Html.EmailInput(m=>m.Email)
 
-		<span>Enter Name: </span>
-		@Html.TextBoxFor(m => m.Name)
+		@Html.DateInput(m=>m.DateOfBirth)
 
-		<br />
-		<br />
+		@Html.PasswordInput(m=>m.Password)
 
-		<span>Enter Email: </span>
-		@Html.TextBoxFor(m => m.Email, new { @type = "email" })
+		@Html.TextInput(m=>m.roleID)
 
-		<br />
-		<br />
-
-		<span>Enter Date of Birth: </span>
-		@Html.TextBoxFor(m => m.DateOfBirth, new { @type = "date" })
-
-		<br />
-		<br />
-
-		<span>Enter Password: </span>
-		@Html.PasswordFor(m => m.Password)
-
-		<br />
-		<br />
-
-		<span>Enter RoleID: </span>
-		@Html.TextBoxFor(m => m.roleID)
-
-		<br />
-		<br />
-
-		<input type="submit" value="Submit Form" />
+		@Html.SubmitButton("Submit form")
 	}
 </div>

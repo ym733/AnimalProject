@@ -46,9 +46,10 @@ namespace Animal.Web.Controllers
 			}
 			else
 			{
-                ModelState.AddModelError("FormValidation", "Data entered is Missing or Invalid");
                 return View(model);
 			}
+
+			//Success
 			return RedirectToAction("Index", "Home");
 		}
 

@@ -1,4 +1,5 @@
-﻿@model viewModel.CategoryType
+﻿@model ViewModel.CategoryType
+@using Animal.Web.MediaComponents
 @{
 	ViewData["title"] = "CategoryType";
 }
@@ -7,21 +8,12 @@
 	@using (Html.BeginForm("AddCategoryType", "CategoryType", FormMethod.Post, new { enctype = "multipart/form-data" }))
 	{
 		@Html.AntiForgeryToken()
-		@Html.ValidationMessage("FormValidation")
+		<div>@Html.ValidationMessage("FormValidation")</div>
 
-		<br />
+		@Html.TextInput(m=>m.CategoryName)
 
-		<span>Enter CategoryName: </span>
-		@Html.TextBoxFor(m => m.CategoryName)
+		@Html.FileInput(m=>m.files)
 
-		<br />
-		<br />
-
-		@Html.TextBoxFor(m => m.files, new { type = "file" })
-
-		<br />
-		<br />
-
-		<input type="submit" value="Submit Form" />
+		@Html.SubmitButton("Submit form")
 	}
 </div>

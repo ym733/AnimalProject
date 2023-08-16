@@ -51,16 +51,25 @@ namespace Animal.Web.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public IActionResult AddUser(viewModel.User user)
+		public IActionResult AddUser(ViewModel.User user)
 		{
-			using var obj = new AnimalProvider.Users();
-			if (obj.addUser(user))
+			if (ModelState.IsValid)
 			{
-				return View();
+				using var obj = new AnimalProvider.Users();
+				if (obj.addUser(user))
+				{
+					//Success
+					ModelState.AddModelError("FormValidation", "Success");
+					return View();
+				}
+				else
+				{
+					ModelState.AddModelError("FormValidation", "an error has occured");
+					return View(user);
+				}
 			}
 			else
 			{
-				ModelState.AddModelError("FormValidation", "an error has occured");
 				return View(user);
 			}
 		}
@@ -73,16 +82,25 @@ namespace Animal.Web.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public IActionResult UpdateUser(viewModel.User user) 
+		public IActionResult UpdateUser(ViewModel.User user) 
 		{
-			using var obj = new AnimalProvider.Users();
-			if (obj.updateUser(user))
+			if (ModelState.IsValid)
 			{
-				return View();
+				using var obj = new AnimalProvider.Users();
+				if (obj.updateUser(user))
+				{
+					//Success
+					ModelState.AddModelError("FormValidation", "Success");
+					return View();
+				}
+				else
+				{
+					ModelState.AddModelError("FormValidation", "an error has occured");
+					return View(user);
+				}
 			}
 			else
 			{
-				ModelState.AddModelError("FormValidation", "an error has occured");
 				return View(user);
 			}
 		}
@@ -97,14 +115,23 @@ namespace Animal.Web.Controllers
 		[ValidateAntiForgeryToken]
 		public IActionResult DeleteUser(int id) 
 		{
-			using var obj = new AnimalProvider.Users();
-			if (obj.deleteUser(id))
+			if (ModelState.IsValid)
 			{
-				return View();
+				using var obj = new AnimalProvider.Users();
+				if (obj.deleteUser(id))
+				{
+					//Success
+					ModelState.AddModelError("FormValidation", "Success");
+					return View();
+				}
+				else
+				{
+					ModelState.AddModelError("FormValidation", "an error has occured");
+					return View(id);
+				}
 			}
 			else
 			{
-				ModelState.AddModelError("FormValidation", "an error has occured");
 				return View(id);
 			}
 		}

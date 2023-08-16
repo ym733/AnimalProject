@@ -1,6 +1,5 @@
 ﻿
 using System.Data.SqlClient;
-using viewModel;
 
 namespace AnimalProvider
 {
@@ -35,7 +34,7 @@ namespace AnimalProvider
             return DAL.ExecuteReader<Entities.User>("Animal.spGetUserByInfo").FirstOrDefault();
         }
 
-        public bool addUser(viewModel.User user)
+        public bool addUser(ViewModel.User user)
         {
             using var DAL = new DataAccess.DataAccessLayer();
             DAL.Parameters = new List<SqlParameter> {
@@ -59,7 +58,7 @@ namespace AnimalProvider
             return DAL.ExecuteNonQuery("Animal.spDeleteUser");
         }
 
-        public bool updateUser(viewModel.User user)
+        public bool updateUser(ViewModel.User user)
         {
             using var DAL = new DataAccess.DataAccessLayer();
             DAL.Parameters = new List<SqlParameter> {

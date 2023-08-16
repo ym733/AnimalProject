@@ -37,7 +37,7 @@ namespace Animal.WebAPI.Controllers
 
 
         [HttpPost("AddCategoryType", Name = "AddCategoryType")]
-        public IActionResult addCategoryType([FromForm]viewModel.CategoryType CategoryType)
+        public IActionResult addCategoryType([FromForm]ViewModel.CategoryType CategoryType)
         {
             using var obj = new AnimalProvider.CategoryType();
 
@@ -88,7 +88,7 @@ namespace Animal.WebAPI.Controllers
 
 
         [HttpPost("UpdateCategoryType", Name = "UpdateCategoryType")]
-        public IActionResult updateCategoryType([FromForm]viewModel.CategoryType CategoryType)
+        public IActionResult updateCategoryType([FromForm]ViewModel.CategoryType CategoryType)
         {
             using var obj = new AnimalProvider.CategoryType();
 

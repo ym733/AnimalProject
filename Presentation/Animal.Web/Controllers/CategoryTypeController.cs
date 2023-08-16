@@ -49,57 +49,66 @@ namespace Animal.Web.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public IActionResult AddCategoryType(viewModel.CategoryType CategoryType)
+		public IActionResult AddCategoryType(ViewModel.CategoryType CategoryType)
 		{
-			using var obj = new AnimalProvider.CategoryType();
-
-			string pathToDirectory = _webHostEnvironment.ContentRootPath + "\\FileUploads\\";
-			string pathToFile = pathToDirectory + String.Format("{0}.{1}", DateTimeOffset.Now.ToUnixTimeMilliseconds(), CategoryType.files.ContentType.Split("/")[1]);
-			//(DateTimeOffset.Now.ToUnixTimeSeconds()) should return the current unix time in milliseconds
-			//(CategoryType.files.ContentType.Split("/")[1]) should return "png" as in the extension of the image
-
-			try
+			if (ModelState.IsValid)
 			{
-				if (CategoryType.files.Length > 0)
+				using var obj = new AnimalProvider.CategoryType();
+
+				string pathToDirectory = _webHostEnvironment.ContentRootPath + "\\FileUploads\\";
+				string pathToFile = pathToDirectory + String.Format("{0}.{1}", DateTimeOffset.Now.ToUnixTimeMilliseconds(), CategoryType.files.ContentType.Split("/")[1]);
+				//(DateTimeOffset.Now.ToUnixTimeSeconds()) should return the current unix time in milliseconds
+				//(CategoryType.files.ContentType.Split("/")[1]) should return "png" as in the extension of the image
+
+				try
 				{
-					if (!Directory.Exists(pathToDirectory))
+					if (CategoryType.files.Length > 0)
 					{
-						Directory.CreateDirectory(pathToDirectory);
+						if (!Directory.Exists(pathToDirectory))
+						{
+							Directory.CreateDirectory(pathToDirectory);
+						}
+						using (FileStream fileStream = System.IO.File.Create(pathToFile))
+						{
+							CategoryType.files.CopyTo(fileStream);
+							fileStream.Flush();
+							fileStream.Close();
+						}
 					}
-					using (FileStream fileStream = System.IO.File.Create(pathToFile))
+					else
 					{
-						CategoryType.files.CopyTo(fileStream);
-						fileStream.Flush();
-						fileStream.Close();
+						ModelState.AddModelError("FormValidation", "empty or no file sent");
+						return View(CategoryType);
 					}
+				}
+				catch (Exception ex)
+				{
+					ModelState.AddModelError("FormValidation", "an error has occured\n" + ex.Message);
+					return View(CategoryType);
+				}
+
+				Entities.CategoryType modelSent = new Entities.CategoryType();
+				modelSent.Id = CategoryType.Id;
+				modelSent.CategoryName = CategoryType.CategoryName;
+				modelSent.ImagePath = pathToFile;
+
+				if (obj.addCategoryType(modelSent))
+				{
+					//Success
+					ModelState.AddModelError("FormValidation", "Success");
+					return View();
 				}
 				else
 				{
-					ModelState.AddModelError("FormValidation", "empty or no file sent");
+					ModelState.AddModelError("FormValidation", "an error has occured");
 					return View(CategoryType);
 				}
 			}
-			catch (Exception ex)
-			{
-				ModelState.AddModelError("FormValidation", "an error has occured\n" + ex.Message);
-				return View(CategoryType);
-			}
-
-			Entities.CategoryType modelSent = new Entities.CategoryType();
-			modelSent.Id = CategoryType.Id;
-			modelSent.CategoryName = CategoryType.CategoryName;
-			modelSent.ImagePath = pathToFile;
-
-			if (obj.addCategoryType(modelSent))
-			{
-				//Successful
-				return View();
-			}
 			else
 			{
-				ModelState.AddModelError("FormValidation", "an error has occured");
 				return View(CategoryType);
 			}
+			
 		}
 
 		[HttpGet]
@@ -110,59 +119,67 @@ namespace Animal.Web.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public IActionResult UpdateCategoryType(viewModel.CategoryType CategoryType)
+		public IActionResult UpdateCategoryType(ViewModel.CategoryType CategoryType)
 		{
-			using var obj = new AnimalProvider.CategoryType();
-
-			//to delete the current categorytype image currently stored
-			Entities.CategoryType prevInstance = obj.getCategoryType(CategoryType.Id);
-			System.IO.File.Delete(prevInstance.ImagePath);
-
-			string pathToDirectory = _webHostEnvironment.ContentRootPath + "\\FileUploads\\";
-			string pathToFile = pathToDirectory + String.Format("{0}.{1}", DateTimeOffset.Now.ToUnixTimeMilliseconds(), CategoryType.files.ContentType.Split("/")[1]);
-			//(DateTimeOffset.Now.ToUnixTimeSeconds()) should return the current unix time in milliseconds
-			//(CategoryType.files.ContentType.Split("/")[1]) should return "png" as in the extension of the image
-
-			try
+			if (ModelState.IsValid)
 			{
-				if (CategoryType.files.Length > 0)
+				using var obj = new AnimalProvider.CategoryType();
+
+				//to delete the current categorytype image currently stored
+				Entities.CategoryType prevInstance = obj.getCategoryType(CategoryType.Id);
+				System.IO.File.Delete(prevInstance.ImagePath);
+
+				string pathToDirectory = _webHostEnvironment.ContentRootPath + "\\FileUploads\\";
+				string pathToFile = pathToDirectory + String.Format("{0}.{1}", DateTimeOffset.Now.ToUnixTimeMilliseconds(), CategoryType.files.ContentType.Split("/")[1]);
+				//(DateTimeOffset.Now.ToUnixTimeSeconds()) should return the current unix time in milliseconds
+				//(CategoryType.files.ContentType.Split("/")[1]) should return "png" as in the extension of the image
+
+				try
 				{
-					if (!Directory.Exists(pathToDirectory))
+					if (CategoryType.files.Length > 0)
 					{
-						Directory.CreateDirectory(pathToDirectory);
+						if (!Directory.Exists(pathToDirectory))
+						{
+							Directory.CreateDirectory(pathToDirectory);
+						}
+						using (FileStream fileStream = System.IO.File.Create(pathToFile))
+						{
+							CategoryType.files.CopyTo(fileStream);
+							fileStream.Flush();
+							fileStream.Close();
+						}
 					}
-					using (FileStream fileStream = System.IO.File.Create(pathToFile))
+					else
 					{
-						CategoryType.files.CopyTo(fileStream);
-						fileStream.Flush();
-						fileStream.Close();
+						ModelState.AddModelError("FormValidation", "empty or no file sent");
+						return View(CategoryType);
 					}
+				}
+				catch (Exception ex)
+				{
+					ModelState.AddModelError("FormValidation", "an error has occured\n" + ex.Message);
+					return View(CategoryType);
+				}
+
+				Entities.CategoryType modelSent = new Entities.CategoryType();
+				modelSent.Id = CategoryType.Id;
+				modelSent.CategoryName = CategoryType.CategoryName;
+				modelSent.ImagePath = pathToFile;
+
+				if (obj.updateCategoryType(modelSent))
+				{
+					//Success
+					ModelState.AddModelError("FormValidation", "Success");
+					return View();
 				}
 				else
 				{
-					ModelState.AddModelError("FormValidation", "empty or no file sent");
+					ModelState.AddModelError("FormValidation", "an error has occured");
 					return View(CategoryType);
 				}
 			}
-			catch (Exception ex)
-			{
-				ModelState.AddModelError("FormValidation", "an error has occured\n" + ex.Message);
-				return View(CategoryType);
-			}
-
-			Entities.CategoryType modelSent = new Entities.CategoryType();
-			modelSent.Id = CategoryType.Id;
-			modelSent.CategoryName = CategoryType.CategoryName;
-			modelSent.ImagePath = pathToFile;
-
-			if (obj.updateCategoryType(modelSent))
-			{
-				//Successful
-				return View();
-			}
 			else
 			{
-				ModelState.AddModelError("FormValidation", "an error has occured");
 				return View(CategoryType);
 			}
 		}
@@ -177,16 +194,24 @@ namespace Animal.Web.Controllers
 		[ValidateAntiForgeryToken]
 		public IActionResult DeleteCategoryType(int id)
 		{
-			using var obj = new AnimalProvider.CategoryType();
-
-			if (obj.deleteCategoryType(id))
+			if (ModelState.IsValid)
 			{
-				//Successful
-				return View();
+				using var obj = new AnimalProvider.CategoryType();
+
+				if (obj.deleteCategoryType(id))
+				{
+					//Success
+					ModelState.AddModelError("FormValidation", "Success");
+					return View();
+				}
+				else
+				{
+					ModelState.AddModelError("FormValidation", "an error has occured");
+					return View(id);
+				}
 			}
 			else
 			{
-				ModelState.AddModelError("FormValidation", "an error has occured");
 				return View(id);
 			}
 		}

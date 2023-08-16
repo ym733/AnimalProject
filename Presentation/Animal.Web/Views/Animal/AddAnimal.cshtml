@@ -1,4 +1,5 @@
 ﻿@model Entities.Animal
+@using Animal.Web.MediaComponents
 @{
 	ViewData["title"] = "Animal";
 }
@@ -7,28 +8,14 @@
 	@using (Html.BeginForm("AddAnimal", "Animal", FormMethod.Post, new { enctype = "multipart/form-data" }))
 	{
 		@Html.AntiForgeryToken()
-		@Html.ValidationMessage("FormValidation")
+		<div>@Html.ValidationMessage("FormValidation")</div>
 
-		<br />
+		@Html.TextInput(m=>m.Name)
 
-		<span>Enter Name: </span>
-		@Html.TextBoxFor(m => m.Name)
+		@Html.TextInput(m=>m.age)
 
-		<br />
-		<br />
+		@Html.TextInput(m=>m.CategoryID)
 
-		<span>Enter Age: </span>
-		@Html.TextBoxFor(m => m.age)
-
-		<br />
-		<br />
-
-		<span>Enter CategoryID: </span>
-		@Html.TextBoxFor(m => m.CategoryID)
-
-		<br />
-		<br />
-
-		<input type="submit" value="Submit Form" />
+		@Html.SubmitButton("Submit form")
 	}
 </div>

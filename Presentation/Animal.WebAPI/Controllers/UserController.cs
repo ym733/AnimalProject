@@ -42,7 +42,7 @@ namespace Animal.WebAPI.Controllers
 
 
         [HttpPost("AddUser", Name = "AddUser")]
-        public IActionResult AddUser(viewModel.User user)
+        public IActionResult AddUser(ViewModel.User user)
         {
             using var obj = new AnimalProvider.Users();
             if (obj.addUser(user))
@@ -72,7 +72,7 @@ namespace Animal.WebAPI.Controllers
 
 
         [HttpPost("UpdateUser", Name="UpdateUser")]
-        public IActionResult UpdateUser(viewModel.User user)
+        public IActionResult UpdateUser(ViewModel.User user)
         {
             using var obj = new AnimalProvider.Users();
             if (obj.updateUser(user))

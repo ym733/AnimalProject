@@ -1,4 +1,5 @@
 ﻿@model Entities.FileUpload
+@using Animal.Web.MediaComponents
 @{
 	ViewData["title"] = "FileUpload";
 }
@@ -6,12 +7,10 @@
 	@using (Html.BeginForm("UploadFile", "FileUpload", FormMethod.Post, new { enctype = "multipart/form-data" }))
 	{
 		@Html.AntiForgeryToken()
-		@Html.ValidationMessage("FormValidation")
+		<div>@Html.ValidationMessage("FormValidation")</div>
 
-		<br />
+		@Html.TextInput(m=>m.files)
 
-		@Html.TextBoxFor(m => m.files, new { type = "file" })
-		<br /> <br />
-		<input type="submit" value="Submit Form" />
+		@Html.SubmitButton("Submit form")
 	}
 </div>
