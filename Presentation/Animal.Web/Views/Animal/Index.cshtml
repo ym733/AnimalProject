@@ -5,19 +5,41 @@
 <div>
 	<ul>
 		<li class="nav-item h3">
-			<a class="nav-link text-dark" asp-area="" asp-controller="Animal" asp-action="GetAllAnimals">GetAllAnimals</a>
+			<a class="nav-link text-dark" href="javascript:changeMain('@Url.Action("GetAllAnimals", "Animal")');">GetAllAnimals</a>
 		</li>
 		<li class="nav-item h3">
-			<a class="nav-link text-dark" asp-area="" asp-controller="Animal" asp-action="GetAnimal" asp-route-id="0">GetAnimal</a>
+			<a class="nav-link text-dark" href="javascript:changeMain('@Url.Action("GetAnimal", "Animal")');">GetAnimal</a>
 		</li>
 		<li class="nav-item h3">
-			<a class="nav-link text-dark" asp-area="" asp-controller="Animal" asp-action="AddAnimal">AddAnimal</a>
+			<a class="nav-link text-dark" href="javascript:changeMain('@Url.Action("AddAnimal", "Animal")');">AddAnimal</a>
 		</li>
 		<li class="nav-item h3">
-			<a class="nav-link text-dark" asp-area="" asp-controller="Animal" asp-action="UpdateAnimal">UpdateAnimal</a>
+			<a class="nav-link text-dark" href="javascript:changeMain('@Url.Action("UpdateAnimal", "Animal")');">UpdateAnimal</a>
 		</li>
 		<li class="nav-item h3">
-			<a class="nav-link text-dark" asp-area="" asp-controller="Animal" asp-action="DeleteAnimal">DeleteAnimals</a>
+			<a class="nav-link text-dark" href="javascript:changeMain('@Url.Action("DeleteAnimal", "Animal")');">DeleteAnimal</a>
 		</li>
 	</ul>
 </div>
+
+<script type='text/javascript'>
+	function changeUrl(newUrl) {
+		history.pushState(null, null, newUrl);
+	}
+
+	function changeMain(url){
+		changeUrl(url);
+		$.ajax({
+			url: url,
+			method: "GET",
+			contentType: null,
+			dataType: "html",
+			success: (data) => {
+				$("main").html(data);
+			},
+			error: (err) => {
+				console.error(err);
+			}
+		});
+	}
+</script>

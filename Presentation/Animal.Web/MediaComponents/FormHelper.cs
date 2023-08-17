@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Animal.Web.MediaComponents
 {
-	public static class LoginHelper
+	public static class FormHelper
 	{
 		public static IHtmlContent TextInput<TModel, TProperty>(this IHtmlHelper<TModel> helper, Expression<Func<TModel, TProperty>> expression)
 		{
@@ -81,5 +81,5 @@ namespace Animal.Web.MediaComponents
 
 			return new HtmlString(button.GetHtmlContentString());
 		}
-	}
+    }
 }

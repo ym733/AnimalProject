@@ -38,7 +38,7 @@ namespace Animal.Web.Controllers
 				var authProperties = new AuthenticationProperties
 				{
 					IsPersistent = true,
-					ExpiresUtc = DateTime.UtcNow.AddMinutes(2),
+					ExpiresUtc = DateTime.UtcNow.AddMinutes(15),
 					AllowRefresh = true,
 				};
 

@@ -37,9 +37,8 @@ namespace Animal.Web.Controllers
 		[CustomAuthorize("user", "admin", "superAdmin")]
 		public IActionResult GetCurrentUser()
 		{
-			int id = CurrentUser.Id;
-            var obj = new AnimalProvider.Users();
-            var model = obj.getUser(id);
+			var obj = new AnimalProvider.Users();
+            var model = obj.getUser(CurrentUser.Id);
             return View("GetUser", model);
         }
 

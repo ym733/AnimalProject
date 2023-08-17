@@ -5,7 +5,7 @@
 }
 
 <div>
-	@using (Html.BeginForm("AddAnimal", "Animal", FormMethod.Post, new { enctype = "multipart/form-data" }))
+	@using (Html.BeginForm("AddAnimal", "Animal", FormMethod.Post, new { enctype = "multipart/form-data", onSubmit = "formSubmit(this, event);" }))
 	{
 		@Html.AntiForgeryToken()
 		<div>@Html.ValidationMessage("FormValidation")</div>
@@ -19,3 +19,23 @@
 		@Html.SubmitButton("Submit form")
 	}
 </div>
+
+<script>
+	function formSubmit(formData, event) {
+		event.preventDefault();
+		$.ajax({
+			type: "POST",
+			url: '@Url.Action("AddAnimal", "Animal")',
+			data: new FormData(formData),
+			dataType: "json",
+			contentType: "application/json; charset=utf-8",
+			processData: false,
+			success: function (data) {
+				$("main").html(data);
+			},
+			error: function (err) {
+				console.error(err);
+			}
+		});
+	}
+</script>

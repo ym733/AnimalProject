@@ -1,28 +1,50 @@
 ﻿@model List<Entities.Animal>
 @{
-	ViewData["title"] = "Animal";
+	ViewData["title"] = "animal";
 }
 
 <div>
 	<table class="table table-bordered table-striped">
-	<thead>
-		<th class="p-3">ID</thc>
+		<thead>
+		<th class="p-3">ID</th>
 		<th class="p-3">Name</th>
 		<th class="p-3">Age</th>
 		<th class="p-3">categoryID</th>
-	</thead>
+		</thead>
 
-	@{
-		foreach(var item in Model)
-		{
-			<tr>
+		@{
+			foreach (var item in Model)
+			{
+				<tr>
 					<td class="p-3">@item.ID</td>
 					<td class="p-3">@item.Name</td>
 					<td class="p-3">@item.age</td>
 					<td class="p-3">@item.CategoryID</td>
-					<td class="p-3"><a class="nav-link text-dark" asp-area="" asp-controller="Animal" asp-action="GetAnimal" asp-route-id=@item.ID>view model</a></td>
-			</tr>
+					<td class="p-3"><a class="nav-link text-dark" href="javascript:changeMain('@Url.Action("GetAnimal", "Animal", new {id = item.ID})');">view model</a></td>
+				</tr>
+			}
 		}
-	}
 	</table>
 </div>
+
+<script type='text/javascript'>
+	function changeUrl(newUrl) {
+		history.pushState(null, null, newUrl);
+	}
+
+	function changeMain(url) {
+		changeUrl(url);
+		$.ajax({
+			url: url,
+			method: "GET",
+			contentType: null,
+			dataType: "html",
+			success: (data) => {
+				$("main").html(data);
+			},
+			error: (err) => {
+				console.error(err);
+			}
+		});
+	}
+</script>
