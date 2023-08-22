@@ -20,7 +20,7 @@
 					<td class="p-3">@item.CategoryName</td>
 					<td class="p-3">@item.ImagePath</td>
 					<td class="p-3">
-						<a class="nav-link text-dark" asp-area="" asp-controller="categoryType" asp-action="GetCategoryType" asp-route-id=@item.Id>view model</a>
+						<a class="nav-link text-dark" href="javascript:changeMain('@Url.Action("GetCategoryType", "CategoryType", new {id = item.Id})');">view model</a>
 					</td>
 				</tr>
 			}

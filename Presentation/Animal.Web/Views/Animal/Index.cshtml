@@ -21,25 +21,3 @@
 		</li>
 	</ul>
 </div>
-
-<script type='text/javascript'>
-	function changeUrl(newUrl) {
-		history.pushState(null, null, newUrl);
-	}
-
-	function changeMain(url){
-		changeUrl(url);
-		$.ajax({
-			url: url,
-			method: "GET",
-			contentType: null,
-			dataType: "html",
-			success: (data) => {
-				$("main").html(data);
-			},
-			error: (err) => {
-				console.error(err);
-			}
-		});
-	}
-</script>

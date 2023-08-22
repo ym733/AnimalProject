@@ -20,7 +20,7 @@
 					<td class="p-3">@item.DateOfBirth</td>
 					<td class="p-3">@item.role</td>
 					<td class="p-3">
-						<a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="GetUser" asp-route-id=@item.Id>view model</a>
+						<a class="nav-link text-dark" href="javascript:changeMain('@Url.Action("GetUser", "User", new {id = item.Id})');">view model</a>
 					</td>
 
 				</tr>

@@ -6,10 +6,10 @@
 <div>
 	<ul>
 		<li class="nav-item h3">
-			<a class="nav-link text-dark" asp-area="" asp-controller="FileUpload" asp-action="UploadFile">UploadFile</a>
+			<a class="nav-link text-dark" href="javascript:changeMain('@Url.Action("UploadFile", "FileUpload")');">UploadFile</a>
 		</li>
 		<li class="nav-item h3">
-			<a class="nav-link text-dark" asp-area="" asp-controller="FileUpload" asp-action="GetFile">GetFile</a>
+			<a class="nav-link text-dark" href="javascript:changeMain('@Url.Action("GetFile", "FileUpload")');">GetFile</a>
 		</li>
 	</ul>
 </div>

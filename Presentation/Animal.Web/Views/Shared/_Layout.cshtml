@@ -12,7 +12,7 @@
 	<header>
 		<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
 			<div class="container-fluid">
-				<a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Animal.Web</a>
+				<a class="navbar-brand" href="javascript:changeMain('@Url.Action("Index", "Home")');">Animal.Web</a>
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
 						aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
@@ -20,35 +20,56 @@
 				<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
 					<ul class="navbar-nav flex-grow-1">
 						<li class="nav-item">
-							<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+							<a class="nav-link text-dark" href="javascript:changeMain('@Url.Action("Home", "Home")');">Home</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+							<a class="nav-link text-dark" href="javascript:changeMain('@Url.Action("Privacy", "Home")');">Privacy</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link text-dark" asp-area="" asp-controller="animal" asp-action="Index">Animal</a>
+							<a class="nav-link text-dark" href="javascript:changeMain('@Url.Action("Index", "Animal")');">Animal</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link text-dark" asp-area="" asp-controller="categoryType" asp-action="Index">categoryType</a>
+							<a class="nav-link text-dark" href="javascript:changeMain('@Url.Action("Index", "CategoryType")');">categoryType</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">User</a>
+							<a class="nav-link text-dark" href="javascript:changeMain('@Url.Action("Index", "User")');">User</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link text-dark" asp-area="" asp-controller="FileUpload" asp-action="Index">FileUpload</a>
+							<a class="nav-link text-dark" href="javascript:changeMain('@Url.Action("Index", "FileUpload")');">FileUpload</a>
 						</li>
 					</ul>
 
 					@if (User.Identity.IsAuthenticated)
 					{
-						<a class="nav-link text-dark float-end" asp-area="" asp-controller="Login" asp-action="Logout">Logout</a>
-						<a class="nav-link text-dark float-end" asp-area="" asp-controller="User" asp-action="GetCurrentUser">User Details</a>
+						<a class="nav-link text-dark float-end" href="javascript:changeMain('@Url.Action("Logout", "Login")');">Logout</a>
+						<a class="nav-link text-dark float-end" href="javascript:changeMain('@Url.Action("HGetCurrentUser", "User")');">User Details</a>
 					}
 					else
 					{
-						<a class="nav-link text-dark float-end" asp-area="" asp-controller="Login" asp-action="Index">Login</a>
+						<a class="nav-link text-dark float-end" href="javascript:changeMain('@Url.Action("Index", "Login")');">Login</a>
 					}
 				</div>
+				<script type='text/javascript'>
+					function changeUrl(newUrl) {
+						history.pushState(null, null, newUrl);
+					}
+
+					function changeMain(url) {
+						changeUrl(url);
+						$.ajax({
+							url: url,
+							method: "GET",
+							contentType: null,
+							dataType: "html",
+							success: (data) => {
+								$("main").html(data);
+							},
+							error: (err) => {
+								console.error(err);
+							}
+						});
+					}
+				</script>
 			</div>
 		</nav>
 	</header>
@@ -66,6 +87,27 @@
 	<script src="~/lib/jquery/dist/jquery.min.js"></script>
 	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="~/js/site.js" asp-append-version="true"></script>
+	<script type='text/javascript'>
+	function changeUrl(newUrl) {
+		history.pushState(null, null, newUrl);
+	}
+
+	function changeMain(url){
+		changeUrl(url);
+		$.ajax({
+			url: url,
+			method: "GET",
+			contentType: null,
+			dataType: "html",
+			success: (data) => {
+				$("main").html(data);
+			},
+			error: (err) => {
+				console.error(err);
+			}
+		});
+	}
+</script>
 	@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
