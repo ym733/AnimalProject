@@ -20,7 +20,7 @@
 				<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
 					<ul class="navbar-nav flex-grow-1">
 						<li class="nav-item">
-							<a class="nav-link text-dark" href="javascript:changeMain('@Url.Action("Home", "Home")');">Home</a>
+							<a class="nav-link text-dark" href="javascript:changeMain('@Url.Action("Index", "Home")');">Home</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link text-dark" href="javascript:changeMain('@Url.Action("Privacy", "Home")');">Privacy</a>
@@ -41,8 +41,8 @@
 
 					@if (User.Identity.IsAuthenticated)
 					{
-						<a class="nav-link text-dark float-end" href="javascript:changeMain('@Url.Action("Logout", "Login")');">Logout</a>
-						<a class="nav-link text-dark float-end" href="javascript:changeMain('@Url.Action("HGetCurrentUser", "User")');">User Details</a>
+						<a class="nav-link text-dark float-end" asp-controller="Login" asp-action="Logout">Logout</a>
+						<a class="nav-link text-dark float-end" href="javascript:changeMain('@Url.Action("GetCurrentUser", "User")');">User Details</a>
 					}
 					else
 					{
@@ -88,26 +88,35 @@
 	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="~/js/site.js" asp-append-version="true"></script>
 	<script type='text/javascript'>
-	function changeUrl(newUrl) {
-		history.pushState(null, null, newUrl);
-	}
+		function changeUrl(newUrl) {
+			let pageTitle = document.title;
+			history.pushState({ newUrl, pageTitle }, pageTitle, newUrl);
+			console.log(pageTitle)
+		}
 
-	function changeMain(url){
-		changeUrl(url);
-		$.ajax({
-			url: url,
-			method: "GET",
-			contentType: null,
-			dataType: "html",
-			success: (data) => {
-				$("main").html(data);
-			},
-			error: (err) => {
-				console.error(err);
+		function changeMain(url) {
+			changeUrl(url);
+			$.ajax({
+				url: url,
+				method: "GET",
+				contentType: null,
+				dataType: "html",
+				success: (data) => {
+					$("main").html(data);
+				},
+				error: (err) => {
+					console.error(err);
+				}
+			});
+		}
+		window.addEventListener('popstate', function (event) {
+
+			if (event.state) {
+				const newURL = event.state.newUrl;
+				changeMain(newURL)
 			}
 		});
-	}
-</script>
+	</script>
 	@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

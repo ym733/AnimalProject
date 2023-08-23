@@ -88,7 +88,6 @@ namespace Animal.Web.Controllers
 				if (System.IO.File.Exists(filePath))
 				{
 					//Success
-					ModelState.AddModelError("FormValidation", "Success");
 					var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
 					return new FileStreamResult(fileStream, "image/png");
 				}

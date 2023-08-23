@@ -4,7 +4,7 @@
 }
 
 <div>
-	@using (Html.BeginForm("DeleteCategoryType", "CategoryType", FormMethod.Post, new { enctype = "multipart/form-data" }))
+	@using (Html.BeginForm("DeleteCategoryType", "CategoryType", FormMethod.Post, new { enctype = "multipart/form-data", onSubmit = "formSubmit(this, event);" }))
 	{
 		@Html.AntiForgeryToken()
 		<div>@Html.ValidationMessage("FormValidation")</div>
@@ -14,3 +14,23 @@
 		@Html.SubmitButton("Submit form")
 	}
 </div>
+
+<script>
+	function formSubmit(form, event) {
+		event.preventDefault();
+
+		$.ajax({
+			type: "POST",
+			url: '@Url.Action("DeleteCategoryType", "CategoryType")',
+			data: new FormData(form),
+			contentType: false,
+			processData: false,
+			success: function (data) {
+				$("main").html(data);
+			},
+			error: function (err) {
+				console.error(err);
+			}
+		});
+	}
+</script>

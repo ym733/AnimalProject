@@ -21,14 +21,14 @@
 </div>
 
 <script>
-	function formSubmit(formData, event) {
+	function formSubmit(form, event) {
 		event.preventDefault();
+
 		$.ajax({
 			type: "POST",
 			url: '@Url.Action("AddAnimal", "Animal")',
-			data: new FormData(formData),
-			dataType: "json",
-			contentType: "application/json; charset=utf-8",
+			data: new FormData(form),
+			contentType: false,
 			processData: false,
 			success: function (data) {
 				$("main").html(data);
