@@ -1,7 +1,4 @@
 ﻿@using Animal.Web.MediaComponents
-@{
-	ViewData["title"] = "CategoryType";
-}
 
 <div>
 	@using (Html.BeginForm("DeleteCategoryType", "CategoryType", FormMethod.Post, new { enctype = "multipart/form-data", onSubmit = "formSubmit(this, event);" }))

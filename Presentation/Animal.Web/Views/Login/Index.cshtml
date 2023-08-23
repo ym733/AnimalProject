@@ -1,8 +1,5 @@
 ﻿@model ViewModel.Login
 @using Animal.Web.MediaComponents
-@{
-	ViewData["title"] = "Login";
-}
 
 <div>
 	@using (Html.BeginForm("Index", "Login", FormMethod.Post, new { enctype = "multipart/form-data" }))

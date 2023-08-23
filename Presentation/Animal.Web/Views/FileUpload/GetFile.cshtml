@@ -1,7 +1,4 @@
 ﻿@using Animal.Web.MediaComponents
-@{
-	ViewData["title"] = "FileUpload";
-}
 
 <div>
 	@using (Html.BeginForm("GetFile", "FileUpload", FormMethod.Post, new { enctype = "multipart/form-data" }))

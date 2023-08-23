@@ -1,8 +1,5 @@
 ﻿@model Entities.Animal
 @using Animal.Web.MediaComponents
-@{
-	ViewData["title"] = "Animal";
-}
 
 <div>
 	@using (Html.BeginForm("UpdateAnimal", "Animal", FormMethod.Post, new { enctype = "multipart/form-data", onSubmit = "formSubmit(this, event);" }))

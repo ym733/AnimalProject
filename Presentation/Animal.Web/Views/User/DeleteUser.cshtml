@@ -1,7 +1,4 @@
 ﻿@using Animal.Web.MediaComponents
-@{
-	ViewData["title"] = "User";
-}
 
 <div>
 	@using (Html.BeginForm("DeleteUser", "User", FormMethod.Post, new { enctype = "multipart/form-data", onSubmit = "formSubmit(this, event);" }))
