@@ -52,9 +52,12 @@
 			</div>
 		</nav>
 	</header>
+
 	<div class="container">
 		<main role="main" class="pb-3">
-			@RenderBody()
+			<div id="level1">
+				@RenderBody()
+			</div>
 		</main>
 	</div>
 
@@ -67,32 +70,45 @@
 	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="~/js/site.js" asp-append-version="true"></script>
 	<script type='text/javascript'>
-		function changeUrl(newUrl) {
-			history.pushState({newUrl}, null, newUrl);
-		}
+		let divNum = 1;
 
 		function changeMain(url) {
-			changeUrl(url);
+			if (url === window.location.pathname) {
+				return;
+			}
+
+			history.pushState({ url }, null, url);
 			$.ajax({
 				url: url,
 				method: "GET",
 				contentType: null,
 				dataType: "html",
 				success: (data) => {
-					$("main").html(data);
+					$(`#level${divNum}`).attr("hidden", "hidden")
+					divNum++;
+					$(`main`).append(`<div id="level${divNum}">${data}</div>`)
 				},
 				error: (err) => {
 					console.error(err);
 				}
 			});
 		}
-		window.addEventListener('popstate', function (event) {
 
+		window.addEventListener('popstate', function (event) {
 			if (event.state) {
-				const newURL = event.state.newUrl;
-				changeMain(newURL)
+				const newURL = event.state.url;
+				ajaxBackCall();
+			} else {
+				const url = window.location.pathname;
+				ajaxBackCall();
 			}
 		});
+
+		function ajaxBackCall() {
+			$(`#level${divNum}`).remove();
+			divNum--;
+			$(`#level${divNum}`).removeAttr(`hidden`);
+		}
 	</script>
 	@await RenderSectionAsync("Scripts", required: false)
 </body>

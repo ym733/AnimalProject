@@ -1,21 +1,21 @@
 ﻿@model Entities.Animal
 @using Animal.Web.MediaComponents
 
-<div>
-	@using (Html.BeginForm("AddAnimal", "Animal", FormMethod.Post, new { enctype = "multipart/form-data", onSubmit = "formSubmit(this, event);" }))
-	{
-		@Html.AntiForgeryToken()
-		<div>@Html.ValidationMessage("FormValidation")</div>
 
-		@Html.TextInput(m=>m.Name)
+@using (Html.BeginForm("AddAnimal", "Animal", FormMethod.Post, new { enctype = "multipart/form-data", onSubmit = "formSubmit(this, event);" }))
+{
+	@Html.AntiForgeryToken()
+	<div>@Html.ValidationMessage("FormValidation")</div>
 
-		@Html.TextInput(m=>m.age)
+	@Html.TextInput(m=>m.Name)
 
-		@Html.TextInput(m=>m.CategoryID)
+	@Html.TextInput(m=>m.age)
 
-		@Html.SubmitButton("Submit form")
-	}
-</div>
+	@Html.TextInput(m=>m.CategoryID)
+
+	@Html.SubmitButton("Submit form")
+}
+
 
 <script>
 	function formSubmit(form, event) {

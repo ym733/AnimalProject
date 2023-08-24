@@ -58,7 +58,7 @@ namespace Animal.Web.Controllers
 						return View(fileUpload);
 					}
 				}
-				catch (Exception ex)
+				catch
 				{
 					ModelState.AddModelError("FormValidation", "an error has occured");
 					return View(fileUpload);

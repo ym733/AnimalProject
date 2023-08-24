@@ -1,13 +1,12 @@
 ﻿@using Animal.Web.MediaComponents
 
-<div>
-	@using (Html.BeginForm("GetFile", "FileUpload", FormMethod.Post, new { enctype = "multipart/form-data" }))
-	{
-		@Html.AntiForgeryToken()
-		<div>@Html.ValidationMessage("FormValidation")</div>
 
-		@Html.SingleStringInput("FileName")
-		
-		@Html.SubmitButton("Submit form")
-	}
-</div>
+@using (Html.BeginForm("GetFile", "FileUpload", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+	@Html.AntiForgeryToken()
+	<div>@Html.ValidationMessage("FormValidation")</div>
+
+	@Html.SingleStringInput("FileName")
+
+	@Html.SubmitButton("Submit form")
+}

@@ -1,17 +1,17 @@
 ﻿@model Entities.FileUpload
 @using Animal.Web.MediaComponents
 
-<div>
-	@using (Html.BeginForm("UploadFile", "FileUpload", FormMethod.Post, new { enctype = "multipart/form-data", onSubmit = "formSubmit(this, event);" }))
-	{
-		@Html.AntiForgeryToken()
-		<div>@Html.ValidationMessage("FormValidation")</div>
 
-		@Html.TextInput(m=>m.files)
+@using (Html.BeginForm("UploadFile", "FileUpload", FormMethod.Post, new { enctype = "multipart/form-data", onSubmit = "formSubmit(this, event);" }))
+{
+	@Html.AntiForgeryToken()
+	<div>@Html.ValidationMessage("FormValidation")</div>
 
-		@Html.SubmitButton("Submit form")
-	}
-</div>
+	@Html.TextInput(m=>m.files)
+
+	@Html.SubmitButton("Submit form")
+}
+
 
 <script>
 	function formSubmit(form, event) {

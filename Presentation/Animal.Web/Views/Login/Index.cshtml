@@ -1,16 +1,16 @@
 ﻿@model ViewModel.Login
 @using Animal.Web.MediaComponents
 
-<div>
-	@using (Html.BeginForm("Index", "Login", FormMethod.Post, new { enctype = "multipart/form-data" }))
-	{
-		@Html.AntiForgeryToken()
-		<div>@Html.ValidationMessage("FormValidation")</div>
 
-		@Html.TextInput(m=>m.Name)
+@using (Html.BeginForm("Index", "Login", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+	@Html.AntiForgeryToken()
+	<div>@Html.ValidationMessage("FormValidation")</div>
 
-		@Html.PasswordInput(m=>m.Password)
+	@Html.TextInput(m=>m.Name)
 
-		@Html.SubmitButton("Log in")
-	}
-</div>
+	@Html.PasswordInput(m=>m.Password)
+
+	@Html.SubmitButton("Log in")
+}
+

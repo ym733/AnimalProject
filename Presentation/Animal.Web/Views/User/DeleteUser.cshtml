@@ -1,16 +1,16 @@
 ﻿@using Animal.Web.MediaComponents
 
-<div>
-	@using (Html.BeginForm("DeleteUser", "User", FormMethod.Post, new { enctype = "multipart/form-data", onSubmit = "formSubmit(this, event);" }))
-	{
-		@Html.AntiForgeryToken()
-		<div>@Html.ValidationMessage("FormValidation")</div>
 
-		@Html.SingleStringInput("id")
+@using (Html.BeginForm("DeleteUser", "User", FormMethod.Post, new { enctype = "multipart/form-data", onSubmit = "formSubmit(this, event);" }))
+{
+	@Html.AntiForgeryToken()
+	<div>@Html.ValidationMessage("FormValidation")</div>
 
-		@Html.SubmitButton("Submit form")
-	}
-</div>
+	@Html.SingleStringInput("id")
+
+	@Html.SubmitButton("Submit form")
+}
+
 
 <script>
 	function formSubmit(form, event) {

@@ -1,21 +1,21 @@
 ﻿@model ViewModel.CategoryType
 @using Animal.Web.MediaComponents
 
-<div>
-	@using (Html.BeginForm("UpdateCategoryType", "CategoryType", FormMethod.Post, new { enctype = "multipart/form-data", onSubmit = "formSubmit(this, event);" }))
-	{
-		@Html.AntiForgeryToken()
-		<div>@Html.ValidationMessage("FormValidation")</div>
 
-		@Html.TextInput(m=>m.Id)
+@using (Html.BeginForm("UpdateCategoryType", "CategoryType", FormMethod.Post, new { enctype = "multipart/form-data", onSubmit = "formSubmit(this, event);" }))
+{
+	@Html.AntiForgeryToken()
+	<div>@Html.ValidationMessage("FormValidation")</div>
 
-		@Html.TextInput(m=>m.CategoryName)
+	@Html.TextInput(m=>m.Id)
 
-		@Html.FileInput(m=>m.files)
+	@Html.TextInput(m=>m.CategoryName)
 
-		@Html.SubmitButton("Submit form")
-	}
-</div>
+	@Html.FileInput(m=>m.files)
+
+	@Html.SubmitButton("Submit form")
+}
+
 
 <script>
 	function formSubmit(form, event) {

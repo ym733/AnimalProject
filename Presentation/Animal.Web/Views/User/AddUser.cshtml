@@ -1,25 +1,25 @@
 ﻿@model ViewModel.User
 @using Animal.Web.MediaComponents
 
-<div>
-	@using (Html.BeginForm("AddUser", "User", FormMethod.Post, new { enctype = "multipart/form-data", onSubmit = "formSubmit(this, event);" }))
-	{
-		@Html.AntiForgeryToken()
-		<div>@Html.ValidationMessage("FormValidation")</div>
 
-		@Html.TextInput(m=>m.Name)
+@using (Html.BeginForm("AddUser", "User", FormMethod.Post, new { enctype = "multipart/form-data", onSubmit = "formSubmit(this, event);" }))
+{
+	@Html.AntiForgeryToken()
+	<div>@Html.ValidationMessage("FormValidation")</div>
 
-		@Html.EmailInput(m=>m.Email)
+	@Html.TextInput(m=>m.Name)
 
-		@Html.DateInput(m=>m.DateOfBirth)
+	@Html.EmailInput(m=>m.Email)
 
-		@Html.PasswordInput(m=>m.Password)
+	@Html.DateInput(m=>m.DateOfBirth)
 
-		@Html.TextInput(m=>m.roleID)
+	@Html.PasswordInput(m=>m.Password)
 
-		@Html.SubmitButton("Submit form")
-	}
-</div>
+	@Html.TextInput(m=>m.roleID)
+
+	@Html.SubmitButton("Submit form")
+}
+
 
 <script>
 	function formSubmit(form, event) {

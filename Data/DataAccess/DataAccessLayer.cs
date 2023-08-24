@@ -31,7 +31,7 @@ namespace DataAccess
                 con.Open();
                 var ErrorID = cmd.ExecuteNonQuery();
                 con.Close();
-                return ErrorID == 1;
+                return ErrorID != 0;
             }
         }
 
