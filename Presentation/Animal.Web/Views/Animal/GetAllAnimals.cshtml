@@ -16,7 +16,7 @@
 				<td class="p-3">@item.Name</td>
 				<td class="p-3">@item.age</td>
 				<td class="p-3">@item.CategoryID</td>
-				<td class="p-3"><a class="nav-link text-dark" href="javascript:changeMain('@Url.Action("GetAnimal", "Animal", new {id = item.ID})');">view model</a></td>
+				<td class="p-3"><a class="text-dark" href="javascript:changeMain('@Url.Action("GetAnimal", "Animal", new {id = item.ID})');">view model</a></td>
 			</tr>
 		}
 	}

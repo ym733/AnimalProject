@@ -1,23 +1,23 @@
 ﻿@model List<Entities.CategoryType>
 
-	<table class="table table-bordered table-striped">
-		<thead>
-			<th class="p-3">ID</th>
-			<th class="p-3">Name</th>
-			<th class="p-3">ImagePath</th>
-		</thead>
+<table class="table table-bordered table-striped">
+	<thead>
+	<th class="p-3">ID</th>
+	<th class="p-3">Name</th>
+	<th class="p-3">ImagePath</th>
+	</thead>
 
-		@{
-			foreach (var item in Model)
-			{
-				<tr>
-					<td class="p-3">@item.Id</td>
-					<td class="p-3">@item.CategoryName</td>
-					<td class="p-3">@item.ImagePath</td>
-					<td class="p-3">
-						<a class="nav-link text-dark" href="javascript:changeMain('@Url.Action("GetCategoryType", "CategoryType", new {id = item.Id})');">view model</a>
-					</td>
-				</tr>
-			}
+	@{
+		foreach (var item in Model)
+		{
+			<tr>
+				<td class="p-3">@item.Id</td>
+				<td class="p-3">@item.CategoryName</td>
+				<td class="p-3">@item.ImagePath</td>
+				<td class="p-3">
+					<a class="text-dark" href="javascript:changeMain('@Url.Action("GetCategoryType", "CategoryType", new {id = item.Id})');">view model</a>
+				</td>
+			</tr>
 		}
-	</table>
+	}
+</table>

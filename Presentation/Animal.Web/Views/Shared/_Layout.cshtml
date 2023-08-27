@@ -20,7 +20,7 @@
 				<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
 					<ul class="navbar-nav flex-grow-1">
 						<li class="nav-item">
-							<a class="nav-link text-dark" href="javascript:changeMain('@Url.Action("Index", "Home")');">Home</a>
+							<a class="nav-link text-dark text-underline-hover" href="javascript:changeMain('@Url.Action("Index", "Home")');">Home</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link text-dark" href="javascript:changeMain('@Url.Action("Privacy", "Home")');">Privacy</a>
@@ -54,7 +54,10 @@
 	</header>
 
 	<div class="container">
-		<main role="main" class="pb-3">
+		<button class="border-0 rounded position-absolute d-flex m-0" style="background-color: #f2f2f2; padding: 10px 15px;" onclick="history.back();">
+			<span style="border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-right: 8px solid;"></span>
+		</button>
+		<main role="main" class="px-5">
 			<div id="level1">
 				@RenderBody()
 			</div>
