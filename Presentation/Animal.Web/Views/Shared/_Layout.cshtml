@@ -80,7 +80,7 @@
 				return;
 			}
 
-			history.pushState({ url }, null, url);
+			history.pushState({ url, divNum }, null, url, divNum);
 			$.ajax({
 				url: url,
 				method: "GET",
@@ -99,10 +99,13 @@
 
 		window.addEventListener('popstate', function (event) {
 			if (event.state) {
-				const newURL = event.state.url;
-				ajaxBackCall();
+				if(divNum > event.state.divNum+1){
+					ajaxBackCall();
+				}else{
+					const url = event.state.url;
+					ajaxForwardCall(url);
+				}
 			} else {
-				const url = window.location.pathname;
 				ajaxBackCall();
 			}
 		});
@@ -111,6 +114,24 @@
 			$(`#level${divNum}`).remove();
 			divNum--;
 			$(`#level${divNum}`).removeAttr(`hidden`);
+		}
+
+		function ajaxForwardCall(url){
+			//history.pushState({ url, divNum }, null, url, divNum);
+			$.ajax({
+				url: url,
+				method: "GET",
+				contentType: null,
+				dataType: "html",
+				success: (data) => {
+					$(`#level${divNum}`).attr("hidden", "hidden")
+					divNum++;
+					$(`main`).append(`<div id="level${divNum}">${data}</div>`)
+				},
+				error: (err) => {
+					console.error(err);
+				}
+			});
 		}
 	</script>
 	@await RenderSectionAsync("Scripts", required: false)
