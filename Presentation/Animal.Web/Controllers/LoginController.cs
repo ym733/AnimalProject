@@ -58,5 +58,63 @@ namespace Animal.Web.Controllers
 			await HttpContext.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
+
+
+		[HttpGet]
+		public IActionResult Register()
+		{
+			return View();
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> Register(ViewModel.Register model)
+		{
+			if (ModelState.IsValid)
+			{
+				if(model.Password == model.confirmPassword)
+				{
+					using var obj = new AnimalProvider.Users();
+					if (obj.registerUser(model))
+					{
+						var data = new AnimalProvider.Users().getUserByInfo(model.Name, model.Password);
+
+						var varClaims = new ClaimsPrincipal(new ClaimsIdentity(new[]
+						{
+					new Claim("Id", data.Id.ToString()),
+					new Claim(ClaimTypes.Name, data.Name),
+					new Claim(ClaimTypes.Email, data.Email),
+					new Claim(ClaimTypes.DateOfBirth, data.DateOfBirth),
+					new Claim(ClaimTypes.Role, data.role)
+				}, "Custom"));
+
+						var authProperties = new AuthenticationProperties
+						{
+							IsPersistent = true,
+							ExpiresUtc = DateTime.UtcNow.AddMinutes(60),
+							AllowRefresh = true,
+						};
+
+						await HttpContext.SignInAsync(varClaims, authProperties);
+
+						return RedirectToAction("Index", "Home");
+					}
+					else
+					{
+						ModelState.AddModelError("FormValidation", "an error has occured");
+						return View(model);
+					}
+				}
+				else
+				{
+					ModelState.AddModelError("FormValidation", "passwords dont match");
+					return View(model);
+				}
+			}
+			else
+			{
+				return View(model);
+			}
+		}
 	}
 }

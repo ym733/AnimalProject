@@ -1,7 +1,6 @@
 ﻿@model ViewModel.Login
 @using Animal.Web.MediaComponents
 
-
 @using (Html.BeginForm("Index", "Login", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
 	@Html.AntiForgeryToken()
@@ -10,6 +9,8 @@
 	@Html.TextInput(m=>m.Name)
 
 	@Html.PasswordInput(m=>m.Password)
+
+	<a href="javascript:changeMain('@Url.Action("Register", "Login")');">Register?</a>
 
 	@Html.SubmitButton("Log in")
 }

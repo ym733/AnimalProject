@@ -4,18 +4,20 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Animal.Web.Controllers
 {
-	public class UserController : Base.AuthorizationController
+	public class UserController : Base.UserController
 	{
 		private readonly IHttpContextAccessor _httpContextAccessor;
 		public UserController(IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor)
 		{
 			_httpContextAccessor = httpContextAccessor;
 		}
+		[CustomAuthorize("admin", "superAdmin")]
 		public IActionResult Index()
 		{
 			return View();
 		}
 
+		[CustomAuthorize("admin", "superAdmin")]
 		public IActionResult GetAllUsers()
 		{
 			var obj = new AnimalProvider.Users();
@@ -23,6 +25,7 @@ namespace Animal.Web.Controllers
 			return View(objList);
 		}
 
+		[CustomAuthorize("admin", "superAdmin")]
 		public IActionResult GetUser(int id)
 		{
 			if (id == 0)
@@ -34,7 +37,6 @@ namespace Animal.Web.Controllers
 			return View(model);
 		}
 
-		[CustomAuthorize("user", "admin", "superAdmin")]
 		public IActionResult GetCurrentUser()
 		{
 			var obj = new AnimalProvider.Users();
@@ -43,6 +45,7 @@ namespace Animal.Web.Controllers
         }
 
 		[HttpGet]
+		[CustomAuthorize("admin", "superAdmin")]
 		public IActionResult AddUser()
 		{
 			return View();
@@ -50,6 +53,7 @@ namespace Animal.Web.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
+		[CustomAuthorize("admin", "superAdmin")]
 		public IActionResult AddUser(ViewModel.User user)
 		{
 			if (ModelState.IsValid)
@@ -74,6 +78,7 @@ namespace Animal.Web.Controllers
 		}
 
 		[HttpGet]
+		[CustomAuthorize("admin", "superAdmin")]
 		public IActionResult UpdateUser() 
 		{ 
 			return View(); 
@@ -81,6 +86,7 @@ namespace Animal.Web.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
+		[CustomAuthorize("admin", "superAdmin")]
 		public IActionResult UpdateUser(ViewModel.User user) 
 		{
 			if (ModelState.IsValid)
@@ -105,6 +111,7 @@ namespace Animal.Web.Controllers
 		}
 
 		[HttpGet]
+		[CustomAuthorize("admin", "superAdmin")]
 		public IActionResult DeleteUser()
 		{
 			return View();
@@ -112,6 +119,7 @@ namespace Animal.Web.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
+		[CustomAuthorize("admin", "superAdmin")]
 		public IActionResult DeleteUser(int id) 
 		{
 			if (ModelState.IsValid)

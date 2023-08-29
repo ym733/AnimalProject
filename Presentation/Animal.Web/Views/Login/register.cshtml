@@ -1,0 +1,20 @@
+﻿@model ViewModel.Register
+@using Animal.Web.MediaComponents
+
+@using (Html.BeginForm("Register", "Login", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+	@Html.AntiForgeryToken()
+	<div>@Html.ValidationMessage("FormValidation")</div>
+
+	@Html.TextInput(m=>m.Name)
+
+	@Html.EmailInput(m=>m.Email)
+
+	@Html.DateInput(m=>m.dateOfBirth)
+
+	@Html.PasswordInput(m=>m.Password)
+
+	@Html.PasswordInput(m=>m.confirmPassword)
+
+	@Html.SubmitButton("Register")
+}

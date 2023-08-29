@@ -73,5 +73,19 @@ namespace AnimalProvider
 
             return DAL.ExecuteNonQuery("Animal.spUpdateUser");
         }
+
+        public bool registerUser(ViewModel.Register model)
+        {
+			using var DAL = new DataAccess.DataAccessLayer();
+			DAL.Parameters = new List<SqlParameter> {
+				new SqlParameter{ ParameterName = "@Name", Value =  model.Name },
+				new SqlParameter{ ParameterName = "@Email", Value =  model.Email },
+				new SqlParameter{ ParameterName = "@DateOfBirth", Value =  model.dateOfBirth },
+				new SqlParameter{ ParameterName = "@Password", Value =  model.Password },
+				new SqlParameter{ ParameterName = "@RoleID", Value =  3 }
+			};
+
+			return DAL.ExecuteNonQuery("Animal.spAddUser");
+		}
     }
 }
