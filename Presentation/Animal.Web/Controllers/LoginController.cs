@@ -46,7 +46,7 @@ namespace Animal.Web.Controllers
 			}
 			else
 			{
-                return View(model);
+				return View(model);
 			}
 
 			//Success
@@ -56,8 +56,8 @@ namespace Animal.Web.Controllers
 		public async Task<IActionResult> Logout()
 		{
 			await HttpContext.SignOutAsync();
-            return RedirectToAction("Index", "Home");
-        }
+			return RedirectToAction("Index", "Home");
+		}
 
 
 		[HttpGet]
@@ -72,42 +72,34 @@ namespace Animal.Web.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				if(model.Password == model.confirmPassword)
+				using var obj = new AnimalProvider.Users();
+				if (obj.registerUser(model))
 				{
-					using var obj = new AnimalProvider.Users();
-					if (obj.registerUser(model))
-					{
-						var data = new AnimalProvider.Users().getUserByInfo(model.Name, model.Password);
+					var data = new AnimalProvider.Users().getUserByInfo(model.Name, model.Password);
 
-						var varClaims = new ClaimsPrincipal(new ClaimsIdentity(new[]
-						{
+					var varClaims = new ClaimsPrincipal(new ClaimsIdentity(new[]
+					{
 					new Claim("Id", data.Id.ToString()),
 					new Claim(ClaimTypes.Name, data.Name),
 					new Claim(ClaimTypes.Email, data.Email),
 					new Claim(ClaimTypes.DateOfBirth, data.DateOfBirth),
 					new Claim(ClaimTypes.Role, data.role)
-				}, "Custom"));
+						}, "Custom"));
 
-						var authProperties = new AuthenticationProperties
-						{
-							IsPersistent = true,
-							ExpiresUtc = DateTime.UtcNow.AddMinutes(60),
-							AllowRefresh = true,
-						};
-
-						await HttpContext.SignInAsync(varClaims, authProperties);
-
-						return RedirectToAction("Index", "Home");
-					}
-					else
+					var authProperties = new AuthenticationProperties
 					{
-						ModelState.AddModelError("FormValidation", "an error has occured");
-						return View(model);
-					}
+						IsPersistent = true,
+						ExpiresUtc = DateTime.UtcNow.AddMinutes(60),
+						AllowRefresh = true,
+					};
+
+					await HttpContext.SignInAsync(varClaims, authProperties);
+
+					return RedirectToAction("Index", "Home");
 				}
 				else
 				{
-					ModelState.AddModelError("FormValidation", "passwords dont match");
+					ModelState.AddModelError("FormValidation", "an error has occured");
 					return View(model);
 				}
 			}

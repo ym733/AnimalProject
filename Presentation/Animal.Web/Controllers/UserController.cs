@@ -1,5 +1,4 @@
 ﻿using Animal.Web.Base;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Animal.Web.Controllers

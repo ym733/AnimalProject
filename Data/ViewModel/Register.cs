@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace ViewModel
 {
@@ -19,6 +14,7 @@ namespace ViewModel
 		public string Password { get; set; }
 
 		[Required]
+		[Compare("Password", ErrorMessage = "Passwords do not match")]
 		public string confirmPassword { get; set; }
 	}
 }
