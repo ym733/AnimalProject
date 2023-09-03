@@ -81,20 +81,7 @@
 			}
 
 			history.pushState({ url, divNum }, null, url, divNum);
-			$.ajax({
-				url: url,
-				method: "GET",
-				contentType: null,
-				dataType: "html",
-				success: (data) => {
-					$(`#level${divNum}`).attr("hidden", "hidden")
-					divNum++;
-					$(`main`).append(`<div id="level${divNum}">${data}</div>`)
-				},
-				error: (err) => {
-					console.error(err);
-				}
-			});
+			ajaxCall(url);
 		}
 
 		window.addEventListener('popstate', function (event) {
@@ -103,7 +90,7 @@
 					ajaxBackCall();
 				}else{
 					const url = event.state.url;
-					ajaxForwardCall(url);
+					ajaxCall(url);
 				}
 			} else {
 				ajaxBackCall();
@@ -116,8 +103,7 @@
 			$(`#level${divNum}`).removeAttr(`hidden`);
 		}
 
-		function ajaxForwardCall(url){
-			//history.pushState({ url, divNum }, null, url, divNum);
+		function ajaxCall(url){
 			$.ajax({
 				url: url,
 				method: "GET",

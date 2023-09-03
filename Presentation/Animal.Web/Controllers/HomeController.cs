@@ -36,7 +36,7 @@ namespace Animal.Web.Controllers
 			var obj = new AnimalProvider.Users();
 			var model = obj.getUser(1);
 
-            string encrypted = model.Encrypt();
+            var encrypted = model.Encrypt();
 
 			ModelState.AddModelError("encrypted", encrypted);
 

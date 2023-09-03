@@ -7,9 +7,10 @@ namespace Core
 {
 	public static class EncryptionServices
 	{
+		public static Aes aes = Aes.Create();
+
 		public static string Encrypt(this Object model)
 		{
-			Aes aes = Aes.Create();
 			aes.KeySize = 256;
 			aes.Mode = CipherMode.CBC;
 			aes.GenerateIV();
@@ -30,11 +31,6 @@ namespace Core
 		
 		public static Object Decrypt<T>(this string str)
 		{
-			Aes aes = Aes.Create();
-			aes.KeySize = 256;
-			aes.Mode = CipherMode.CBC;
-			aes.GenerateIV();
-			aes.GenerateKey();
 
 			byte[] ciphertext  = Encoding.UTF8.GetBytes(str);
 
