@@ -32,7 +32,7 @@ namespace Animal.WebAPI.Controllers
 
 
         [HttpPost("AddAnimal", Name = "AddAnimal")]
-        public IActionResult addAnimal(Entities.Animal animal)
+        public IActionResult addAnimal(ViewModel.Animal animal)
         {
             using var obj = new AnimalProvider.Animal();
 
@@ -48,7 +48,7 @@ namespace Animal.WebAPI.Controllers
 
 
         [HttpPost("UpdateAnimal", Name = "UpdateAnimal")]
-        public IActionResult updateAnimal(Entities.Animal animal)
+        public IActionResult updateAnimal(ViewModel.Animal animal)
         {
             using var Obj = new AnimalProvider.Animal();
 

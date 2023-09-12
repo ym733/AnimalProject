@@ -1,8 +1,5 @@
-﻿using Animal.Web.Base;
-using Animal.Web.Models;
+﻿using Animal.Web.Models;
 using Core;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -34,15 +31,17 @@ namespace Animal.Web.Controllers
         public IActionResult Test()
         {
 			var obj = new AnimalProvider.Users();
-			var model = obj.getUser(1);
+			var model = "this is a normal string";
 
-            var encrypted = model.Encrypt<Entities.User>();
+            var encrypted = model.Encrypt<string>();
 
 			ModelState.AddModelError("encrypted", encrypted);
 
-            var decrypted = encrypted.Decrypt<Entities.User>(EncryptionServices.genKey, EncryptionServices.genIV);
+            var decrypted = encrypted.Decrypt<string>(EncryptionServices.genKey, EncryptionServices.genIV);
 
-			return View(decrypted);
+			ModelState.AddModelError("decrypted", decrypted);
+
+			return View();
         }
     }
 }

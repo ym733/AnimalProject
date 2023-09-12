@@ -43,7 +43,7 @@ namespace Animal.Web.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public IActionResult AddAnimal(Entities.Animal animal)
+		public IActionResult AddAnimal(ViewModel.Animal animal)
 		{
 			if (ModelState.IsValid)
 			{
@@ -74,7 +74,7 @@ namespace Animal.Web.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public IActionResult UpdateAnimal(Entities.Animal animal)
+		public IActionResult UpdateAnimal(ViewModel.Animal animal)
 		{
 			if (ModelState.IsValid)
 			{

@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
@@ -21,11 +22,20 @@ namespace Core
 				genIV = aes.IV;
 				genKey = aes.Key;
 
-				string strJson = JsonSerializer.Serialize(model);
+				string str = null;
+
+				if (!typeof(T).IsPrimitive)
+				{
+					str = JsonSerializer.Serialize(model);
+				}
+				else
+				{
+					str = model.ToString();
+				}
 
 				using (ICryptoTransform encryptor = aes.CreateEncryptor())
 				{
-					byte[] plaintextBytes = Encoding.UTF8.GetBytes(strJson);
+					byte[] plaintextBytes = Encoding.UTF8.GetBytes(str);
 					byte[] ciphertext = encryptor.TransformFinalBlock(plaintextBytes, 0, plaintextBytes.Length);
 					return Convert.ToBase64String(ciphertext);
 				}
@@ -45,7 +55,15 @@ namespace Core
 				{
 					byte[] decryptedBytes = decryptor.TransformFinalBlock(ciphertext, 0, ciphertext.Length);
 					string decryptedText = Encoding.UTF8.GetString(decryptedBytes);
-					return JsonSerializer.Deserialize<T>(decryptedText);
+
+					if (!typeof(T).IsPrimitive)
+					{
+						return JsonSerializer.Deserialize<T>(decryptedText);
+					}
+					else
+					{
+						return (T)Convert.ChangeType(decryptedText, typeof(T));
+					}
 				}
 			}
 		}

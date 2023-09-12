@@ -5,7 +5,7 @@
 	<th class="p-3">ID</th>
 	<th class="p-3">Name</th>
 	<th class="p-3">Age</th>
-	<th class="p-3">categoryID</th>
+	<th class="p-3">categoryName</th>
 	</thead>
 
 	@{
@@ -15,7 +15,7 @@
 				<td class="p-3">@item.ID</td>
 				<td class="p-3">@item.Name</td>
 				<td class="p-3">@item.age</td>
-				<td class="p-3">@item.CategoryID</td>
+				<td class="p-3">@item.CategoryName</td>
 				<td class="p-3"><a class="text-dark" href="javascript:changeMain('@Url.Action("GetAnimal", "Animal", new {id = item.ID})');">view model</a></td>
 			</tr>
 		}

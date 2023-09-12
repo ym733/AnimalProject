@@ -13,6 +13,6 @@ namespace Entities
         public int age { get; set; }
 
         [Required]
-        public int CategoryID { get; set; }
+        public string CategoryName { get; set; }
     }
 }

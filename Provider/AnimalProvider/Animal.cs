@@ -22,7 +22,7 @@ namespace AnimalProvider
             return DAL.ExecuteReader<Entities.Animal>("Animal.spGetAnimal").FirstOrDefault();
         }
 
-        public bool addAnimal(Entities.Animal entity)
+        public bool addAnimal(ViewModel.Animal entity)
         {
             using var DAL = new DataAccess.DataAccessLayer();
             DAL.Parameters = new List<SqlParameter> {
@@ -34,7 +34,7 @@ namespace AnimalProvider
             return DAL.ExecuteNonQuery("Animal.spAddAnimal");
         }
 
-        public bool updateAnimal(Entities.Animal entity)
+        public bool updateAnimal(ViewModel.Animal entity)
         {
             using var DAL = new DataAccess.DataAccessLayer();
             DAL.Parameters = new List<SqlParameter> {
