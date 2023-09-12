@@ -7,42 +7,48 @@ namespace Core
 {
 	public static class EncryptionServices
 	{
-		public static Aes aes = Aes.Create();
 
-		public static string Encrypt(this Object model)
+		public static byte[] genIV = null;
+		public static byte[] genKey = null;
+
+		public static string Encrypt<T>(this T model)
 		{
-			aes.KeySize = 256;
-			aes.Mode = CipherMode.CBC;
-			aes.GenerateIV();
-			aes.GenerateKey();
-
-			string strJson = JsonSerializer.Serialize(model);
-
-			byte[] ciphertext;
-
-			using (ICryptoTransform encryptor = aes.CreateEncryptor())
+			using (Aes aes = Aes.Create())
 			{
-				byte[] plaintextBytes = Encoding.UTF8.GetBytes(strJson);
-				ciphertext = encryptor.TransformFinalBlock(plaintextBytes, 0, plaintextBytes.Length);
-			}
+				aes.GenerateIV();
+				aes.GenerateKey();
 
-			return Convert.ToBase64String(ciphertext);
+				genIV = aes.IV;
+				genKey = aes.Key;
+
+				string strJson = JsonSerializer.Serialize(model);
+
+				using (ICryptoTransform encryptor = aes.CreateEncryptor())
+				{
+					byte[] plaintextBytes = Encoding.UTF8.GetBytes(strJson);
+					byte[] ciphertext = encryptor.TransformFinalBlock(plaintextBytes, 0, plaintextBytes.Length);
+					return Convert.ToBase64String(ciphertext);
+				}
+			}
 		}
-		
-		public static Object Decrypt<T>(this string str)
+
+		public static T Decrypt<T>(this string str, byte[] key, byte[] iv)
 		{
-
-			byte[] ciphertext  = Encoding.UTF8.GetBytes(str);
-
-			string decryptedText;
-
-			using (ICryptoTransform decryptor = aes.CreateDecryptor(aes.Key, aes.IV))
+			using (Aes aes = Aes.Create())
 			{
-				byte[] decryptedBytes = decryptor.TransformFinalBlock(ciphertext, 0, ciphertext.Length);
-				decryptedText = Encoding.UTF8.GetString(decryptedBytes);
-			}
+				aes.Key = key;
+				aes.IV = iv;
 
-			return JsonSerializer.Deserialize<T>(decryptedText);
+				byte[] ciphertext = Convert.FromBase64String(str);
+
+				using (ICryptoTransform decryptor = aes.CreateDecryptor())
+				{
+					byte[] decryptedBytes = decryptor.TransformFinalBlock(ciphertext, 0, ciphertext.Length);
+					string decryptedText = Encoding.UTF8.GetString(decryptedBytes);
+					return JsonSerializer.Deserialize<T>(decryptedText);
+				}
+			}
 		}
 	}
+
 }

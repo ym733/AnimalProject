@@ -36,11 +36,11 @@ namespace Animal.Web.Controllers
 			var obj = new AnimalProvider.Users();
 			var model = obj.getUser(1);
 
-            var encrypted = model.Encrypt();
+            var encrypted = model.Encrypt<Entities.User>();
 
 			ModelState.AddModelError("encrypted", encrypted);
 
-            var decrypted = encrypted.Decrypt<Entities.User>();
+            var decrypted = encrypted.Decrypt<Entities.User>(EncryptionServices.genKey, EncryptionServices.genIV);
 
 			return View(decrypted);
         }
