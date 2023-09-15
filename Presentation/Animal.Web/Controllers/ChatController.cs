@@ -2,7 +2,7 @@
 
 namespace Animal.Web.Controllers
 {
-	public class ChatController : Base.AuthorizationController
+	public class ChatController : Base.UserController
 	{
 		private readonly IHttpContextAccessor _httpContextAccessor;
 		public ChatController(IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor)

@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnimalProvider", "Provider\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Animal.Web", "Presentation\Animal.Web\Animal.Web.csproj", "{E75566D0-1D47-43BF-8F9C-FB5AD58E503D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewModel", "Data\ViewModel\ViewModel.csproj", "{9E146185-FA66-4EC0-ACB4-318F9E3EF9F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViewModel", "Data\ViewModel\ViewModel.csproj", "{9E146185-FA66-4EC0-ACB4-318F9E3EF9F4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
