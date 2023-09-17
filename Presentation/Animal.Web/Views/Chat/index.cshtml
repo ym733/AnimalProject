@@ -1,12 +1,47 @@
-﻿@model Entities.User
+﻿@model Tuple<Entities.User, List<Entities.Message>, List<HubCallerContext>>
 @using Animal.Web.MediaComponents
 @using System.Text.Json;
+@using Microsoft.AspNetCore.SignalR;
+
+<style>
+    #sidebar {
+        left: 0;
+        width: 160px;
+        transition: left 0.5s ease-in-out;
+    }
+
+    #sidebar.hidden {
+        left: -160px;
+    }
+</style>
+
+<div id="sidebar" class="position-absolute hidden">
+    <ul>
+        @if (Model.Item3.Count == 0)
+        {
+            <li color="red">NO USERS ONLINE</li>
+        }
+
+        @foreach (var item in Model.Item3)
+        {
+            <li>
+                <a class="nav-link text-dark" href="javascript:AjaxPost('@Url.Action("PrivateChat", "Chat")', @JsonSerializer.Serialize(item));">@item.Items["username"]</a>
+            </li>
+        }
+    </ul>
+</div>
+
+<button class="border-0 rounded d-flex fw-bold" style="background-color: #f2f2f2; padding: 10px 15px;" onclick="document.querySelector('#sidebar').classList.toggle('hidden');">
+    USERS
+</button>
+
 
 <div>
-	@Html.SingleStringInput("userMessage")
-	
-	<input type="button" id="sendButton" value="send message"></input>
-    
+    @Html.SingleStringInput("userMessage")
+
+    <input type="button" id="sendButton" value="send message">
+
+    @*
     <br />
 
     @Html.SingleStringInput("userToMessage")
@@ -14,12 +49,18 @@
     @Html.SingleStringInput("userTo")
 
     <input type="button" id="sendToButton" value="send message"></input>
+    *@
 
     <hr />
 
-	<ul id="messagesList"></ul>
+    <ul id="messagesList">
+        @foreach (var item in Model.Item2)
+        {
+            <li>@item.senderName: @item.text</li>
+        }
+    </ul>
 </div>
 
-<span id="modelData" hidden="hidden">@Html.Raw(JsonSerializer.Serialize(Model))</span>
+<span id="modelData" hidden="hidden">@Html.Raw(JsonSerializer.Serialize(Model.Item1))</span>
 <script src="~/js/dist/browser/signalr.js"></script>
 <script src="~/js/chat.js"></script>

@@ -1,23 +1,32 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using System.Collections;
+using System.Diagnostics;
 
 namespace Animal.Web.Hubs
 {
     public sealed class ChatHub : Hub
     {
-        public static Hashtable users = new Hashtable();
-
-        public async Task onConnect(int id, string user)
+        public static List<HubCallerContext> users = new List<HubCallerContext>();
+        
+        public async Task onConnect(int id, string username)
         {
-			await Clients.All.SendAsync("ReceiveMessage", $"{user} has joined.");
-            users.Add(user, new ViewModel.ConnectedUser(id, user, Context.ConnectionId));
+			await Clients.All.SendAsync("ReceiveMessage", $"{username} has joined.");
+            Context.Items.Add("id", id);
+            Context.Items.Add("username", username);
+            users.Add(Context);
 		}
-        public async Task SendGlobalMessage(int id, string user, string message)
+        public async Task SendGlobalMessage(string message)
         {
-            await Clients.All.SendAsync("ReceiveMessage", $"{user}: {message}");
+            await Clients.All.SendAsync("ReceiveMessage", $"{Context.Items["username"]}: {message}");
 			using var obj = new AnimalProvider.Message();
-            obj.sendGlobalMessage(id, message);
+            obj.sendGlobalMessage((int)Context.Items["id"], message);
 		}
+        public override async Task OnDisconnectedAsync(Exception? exception)
+        {
+            await Clients.All.SendAsync("ReceiveMessage", $"{Context.Items["username"]} has disconnected.");
+            users.Remove(Context);
+        }
+        /*
         public async Task SendPrivateMessage(string toUser, string user, string message)
         {
             ViewModel.ConnectedUser? connectedUser = (ViewModel.ConnectedUser)users[toUser];
@@ -27,5 +36,6 @@ namespace Animal.Web.Hubs
             }
 			await Clients.Client(connectedUser.connectionID).SendAsync("ReceiveMessage", $"whisper from {user}: {message}");
 		}
+        */
     }
 }

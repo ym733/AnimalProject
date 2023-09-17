@@ -5,10 +5,10 @@ namespace AnimalProvider
 {
 	public class Message: Core.Disposable
 	{
-		public List<Entities.GlobalMessage> getGlobalMessages()
+		public List<Entities.Message> getGlobalMessages()
 		{
 			using var DAL = new DataAccess.DataAccessLayer();
-			return DAL.ExecuteReader<Entities.GlobalMessage>("Animal.spGetGlobalMessages");
+			return DAL.ExecuteReader<Entities.Message>("Animal.spGetGlobalMessages");
 		}
 
 		public List<Entities.PrivateMessage> getPrivateMessages(int user1ID, int user2ID)

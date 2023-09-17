@@ -1,7 +1,7 @@
 ﻿
 namespace Entities
 {
-	public class GlobalMessage
+	public class Message
 	{
 		public int msgID { get; set; }
 		public string senderName { get; set; }

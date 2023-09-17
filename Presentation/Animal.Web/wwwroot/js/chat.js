@@ -25,11 +25,32 @@ document.getElementById("sendButton").addEventListener("click", () => {
     var userID = model["Id"]
     var message = document.getElementById("userMessage").value;
 
-    connection.invoke("SendGlobalMessage", userID, userName, message).catch((err) => {
+    if (message === '') return;
+
+    connection.invoke("SendGlobalMessage", message).catch((err) => {
         return console.error(err.toString());
     })
     event.preventDefault();
 });
+
+function AjaxPost(url, data) {
+    event.preventDefault();
+
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: data,
+        contentType: 'application/json',
+        traditional: true,
+        success: function (data) {
+            $("main").html(data);
+        },
+        error: function (err) {
+            console.error(err);
+        }
+    });
+}
+/*
 document.getElementById("sendToButton").addEventListener("click", () => {
     var user = model["Name"]
     var message = document.getElementById("userToMessage").value;
@@ -40,3 +61,4 @@ document.getElementById("sendToButton").addEventListener("click", () => {
     })
     event.preventDefault();
 });
+*/
