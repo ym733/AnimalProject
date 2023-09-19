@@ -1,0 +1,20 @@
+﻿@model Tuple<List<Entities.PrivateMessage>, HubCallerContext>
+@using Microsoft.AspNetCore.SignalR;
+@using Animal.Web.MediaComponents;
+
+<div>
+    @Html.SingleStringInput("userToMessage")
+
+    <input type="button" id="sendToButton" value="send message">
+    <input hidden="hidden" id="userToID" value='@Model.Item2.Items["id"]' />
+    <input hidden="hidden" id="userToConnectionID" value="@Model.Item2.ConnectionId" />
+
+    <hr />
+
+    <ul id="privateMessagesList">
+        @foreach (var item in Model.Item1)
+        {
+            <li>@item.senderName: @item.text</li>
+        }
+    </ul>
+</div>

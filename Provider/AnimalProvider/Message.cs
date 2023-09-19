@@ -24,7 +24,7 @@ namespace AnimalProvider
 			return DAL.ExecuteReader<Entities.PrivateMessage>("Animal.spGetPrivateMessages");
 		}
 
-		public bool sendGlobalMessage(int senderID, string text)
+		public  bool sendGlobalMessage(int senderID, string text)
 		{
 			using var DAL = new DataAccess.DataAccessLayer();
 			DAL.Parameters = new List<SqlParameter> {

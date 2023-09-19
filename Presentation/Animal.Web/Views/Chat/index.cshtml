@@ -1,6 +1,5 @@
-﻿@model Tuple<Entities.User, List<Entities.Message>, List<HubCallerContext>>
-@using Animal.Web.MediaComponents
-@using System.Text.Json;
+﻿@model Tuple<List<Entities.Message>, List<HubCallerContext>>
+@using Animal.Web.MediaComponents;
 @using Microsoft.AspNetCore.SignalR;
 
 <style>
@@ -17,15 +16,12 @@
 
 <div id="sidebar" class="position-absolute hidden">
     <ul>
-        @if (Model.Item3.Count == 0)
-        {
-            <li color="red">NO USERS ONLINE</li>
-        }
+        <li id="offline" @(Model.Item2.Count != 0 ? "hidden" : "")>NO USERS ONLINE</li>
 
-        @foreach (var item in Model.Item3)
+        @foreach (var item in Model.Item2)
         {
-            <li>
-                <a class="nav-link text-dark" href="javascript:AjaxPost('@Url.Action("PrivateChat", "Chat")', @JsonSerializer.Serialize(item));">@item.Items["username"]</a>
+            <li id="@item.Items["username"]user">
+                <a class="nav-link text-dark">@item.Items["username"]</a>
             </li>
         }
     </ul>
@@ -41,26 +37,15 @@
 
     <input type="button" id="sendButton" value="send message">
 
-    @*
-    <br />
-
-    @Html.SingleStringInput("userToMessage")
-
-    @Html.SingleStringInput("userTo")
-
-    <input type="button" id="sendToButton" value="send message"></input>
-    *@
-
     <hr />
 
     <ul id="messagesList">
-        @foreach (var item in Model.Item2)
+        @foreach (var item in Model.Item1)
         {
             <li>@item.senderName: @item.text</li>
         }
     </ul>
 </div>
 
-<span id="modelData" hidden="hidden">@Html.Raw(JsonSerializer.Serialize(Model.Item1))</span>
 <script src="~/js/dist/browser/signalr.js"></script>
 <script src="~/js/chat.js"></script>

@@ -18,17 +18,19 @@ namespace Animal.Web.Controllers
 			var obj = new AnimalProvider.Message();
 			List<Entities.Message> messages = obj.getGlobalMessages();
 
-			var tuple = new Tuple<Entities.User, List<Entities.Message>, List<HubCallerContext>>(CurrentUser, messages, ChatHub.users);
+			var tuple = new Tuple<List<Entities.Message>, List<HubCallerContext>>(messages, ChatHub.users);
 
             return View(tuple);
 		}
 
 		public IActionResult PrivateChat(HubCallerContext context)
 		{
-			//list of private messages
-			//current user??
-			//other user context
-			return View();
+            var obj = new AnimalProvider.Message();
+            List<Entities.PrivateMessage> messages = obj.getPrivateMessages(CurrentUser.Id, (int)context.Items["id"]);
+
+			var tuple = new Tuple<List<Entities.PrivateMessage>, HubCallerContext>(messages, context);
+
+            return View(tuple);
 		}
 	}
 }
