@@ -15,13 +15,13 @@
 </style>
 
 <div id="sidebar" class="position-absolute hidden">
-    <ul>
+    <ul id="userList">
         <li id="offline" @(Model.Item2.Count != 0 ? "hidden" : "")>NO USERS ONLINE</li>
 
         @foreach (var item in Model.Item2)
         {
             <li id="@item.Items["username"]user">
-                <a class="nav-link text-dark">@item.Items["username"]</a>
+                <a class="nav-link text-dark" href="javascript:AjaxPost('@Url.Action("PrivateChat", "Chat")', '?id=@item.Items["id"]&username=@item.Items["username"]&connectionID=@item.ConnectionId')">@item.Items["username"]</a>
             </li>
         }
     </ul>

@@ -8,23 +8,23 @@ connection.on("ReceiveMessage", (message) => {
     document.getElementById("messagesList").appendChild(li);
 });
 
-connection.on("UserJoins", (user) => {
-    if (document.getElementById("sidebar").childElementCount == 1) {
+connection.on("UserJoins", (id, username, connectionId) => {
+    if (document.getElementById("userList").childElementCount == 1) {
         document.getElementById("offline").setAttribute("hidden", "hidden")
     }
-    
+
     var node = document.createElement("li")
-    node.setAttribute("id", `${user}user`)
+    node.setAttribute("id", `${username}user`)
     var anchor = document.createElement("a")
     anchor.setAttribute("class", "d-inline nav-link text-dark")
-    anchor.setAttribute("href", "href='javascript: AjaxPost(@Url.Action('PrivateChat', 'Chat', item)'")
-    anchor.textContent = user
+    anchor.setAttribute("href", `javascript:AjaxPost('./Chat/PrivateChat', '?id=${id}&username=${username}&connectionID=${connectionId}')`)
+    anchor.textContent = username
     node.appendChild(anchor)
-    document.getElementById("sidebar").appendChild(node)
+    document.getElementById("userList").appendChild(node)
 });
 
 connection.on("UserLeaves", (user) => {
-    if (document.getElementById("sidebar").childElementCount == 2) {
+    if (document.getElementById("userList").childElementCount == 2) {
         document.getElementById("offline").removeAttribute("hidden")
     }
     document.getElementById(`${user}user`).remove()
@@ -49,40 +49,18 @@ document.getElementById("sendButton").addEventListener("click", () => {
 
 //// PRIVATE MESSAGES
 
-function AjaxPost(url) {
-    event.preventDefault();
+function AjaxPost(url, parameters) {
 
     $.ajax({
-        type: "POST",
-        url: url,
-        //data: data,
-        contentType: 'application/json',
-        traditional: true,
-        success: function (data) {
+        url: url+parameters,
+        type: 'GET',
+        dataType: "html",
+        success: function (response) {
             $(`#level${divNum}`).attr("hidden", "hidden")
             divNum++;
-            $(`main`).append(`<div id="level${divNum}">${data}</div>`)
+            $(`main`).append(`<div id="level${divNum}">${response}</div>`)
         },
         error: function (err) {
-            console.error(err);
         }
     });
 }
-
-document.getElementById("sendToButton").addEventListener("click", () => {
-    //var user = model["Name"]
-    var message = document.getElementById("userToMessage").value;
-    var userTo = parseInt(document.getElementById("userToID").value);
-    var userToConnectionID = document.getElementById("userToConnectionID").value;
-
-    connection.invoke("SendPrivateMessage", userTo, userToConnectionID, message).catch((err) => {
-        return console.error(err.toString());
-    })
-    event.preventDefault();
-});
-
-connection.on("ReceiveMessage", (message) => {
-    var li = document.createElement("li");
-    li.textContent = message;
-    document.getElementById("privateMessagesList").appendChild(li);
-});

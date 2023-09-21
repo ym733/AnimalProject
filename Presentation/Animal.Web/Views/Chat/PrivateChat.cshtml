@@ -1,4 +1,4 @@
-﻿@model Tuple<List<Entities.PrivateMessage>, HubCallerContext>
+﻿@model Tuple<List<Entities.PrivateMessage>, int, string, string>
 @using Microsoft.AspNetCore.SignalR;
 @using Animal.Web.MediaComponents;
 
@@ -6,15 +6,43 @@
     @Html.SingleStringInput("userToMessage")
 
     <input type="button" id="sendToButton" value="send message">
-    <input hidden="hidden" id="userToID" value='@Model.Item2.Items["id"]' />
-    <input hidden="hidden" id="userToConnectionID" value="@Model.Item2.ConnectionId" />
+    <input hidden="hidden" id="userToID" value='@Model.Item2' />
+    
+    <input hidden="hidden" id="userToConnectionID" value='@Model.Item4' />
 
     <hr />
 
     <ul id="privateMessagesList">
+        <li>ConnectionID: @Model.Item4</li>
         @foreach (var item in Model.Item1)
         {
             <li>@item.senderName: @item.text</li>
         }
     </ul>
 </div>
+
+<script>
+    document.getElementById("sendToButton").addEventListener("click", () => {
+        //var user = model["Name"]
+        var message = document.getElementById("userToMessage").value;
+        var userToID = parseInt(document.getElementById("userToID").value);
+        var userToConnectionID = document.getElementById("userToConnectionID").value;
+
+        console.log("invoked1")
+        console.log(`${userToID}, ${userToConnectionID}, ${message}`)
+
+        connection.invoke("SendPrivateMessage", userToID, userToConnectionID, message).catch((err) => {
+            return console.error(err.toString());
+        })
+        event.preventDefault();
+    });
+
+    connection.on("ReceivePrivateMessage", (message) => {
+        console.log("invoked2")
+        console.log(message)
+
+        var li = document.createElement("li");
+        li.textContent = message;
+        document.getElementById("privateMessagesList").appendChild(li);
+    });
+</script>

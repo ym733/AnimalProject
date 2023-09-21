@@ -23,14 +23,14 @@ namespace Animal.Web.Controllers
             return View(tuple);
 		}
 
-		public IActionResult PrivateChat(HubCallerContext context)
+		public IActionResult PrivateChat(int id, string username, string connectionID)
 		{
-            var obj = new AnimalProvider.Message();
-            List<Entities.PrivateMessage> messages = obj.getPrivateMessages(CurrentUser.Id, (int)context.Items["id"]);
+			var obj = new AnimalProvider.Message();
+			List<Entities.PrivateMessage> messages = obj.getPrivateMessages(CurrentUser.Id, id);
 
-			var tuple = new Tuple<List<Entities.PrivateMessage>, HubCallerContext>(messages, context);
+			var tuple = new Tuple<List<Entities.PrivateMessage>, int, string, string>(messages, id, username, connectionID);
 
-            return View(tuple);
+			return View(tuple);
 		}
 	}
 }
