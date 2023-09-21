@@ -1,4 +1,4 @@
-﻿@model Tuple<List<Entities.Message>, List<HubCallerContext>>
+﻿@model Tuple<List<Entities.Message>, List<HubCallerContext>, Entities.User>
 @using Animal.Web.MediaComponents;
 @using Microsoft.AspNetCore.SignalR;
 
@@ -21,7 +21,7 @@
         @foreach (var item in Model.Item2)
         {
             <li id="@item.Items["username"]user">
-                <a class="nav-link text-dark" href="javascript:AjaxPost('@Url.Action("PrivateChat", "Chat")', '?id=@item.Items["id"]&username=@item.Items["username"]&connectionID=@item.ConnectionId')">@item.Items["username"]</a>
+                <a class="nav-link text-dark" href="javascript:AjaxPost('@Url.Action("PrivateChat", "Chat")', {id:@item.Items["id"], username:'@item.Items["username"]', connectionID:'@item.ConnectionId'})">@item.Items["username"]</a>
             </li>
         }
     </ul>
@@ -36,6 +36,7 @@
     @Html.SingleStringInput("userMessage")
 
     <input type="button" id="sendButton" value="send message">
+    <input id="userID" value="@Model.Item3.Id" hidden="hidden"/>
 
     <hr />
 

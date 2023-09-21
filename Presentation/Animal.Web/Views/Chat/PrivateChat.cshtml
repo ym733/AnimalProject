@@ -7,13 +7,11 @@
 
     <input type="button" id="sendToButton" value="send message">
     <input hidden="hidden" id="userToID" value='@Model.Item2' />
-    
     <input hidden="hidden" id="userToConnectionID" value='@Model.Item4' />
 
     <hr />
 
     <ul id="privateMessagesList">
-        <li>ConnectionID: @Model.Item4</li>
         @foreach (var item in Model.Item1)
         {
             <li>@item.senderName: @item.text</li>
@@ -23,7 +21,6 @@
 
 <script>
     document.getElementById("sendToButton").addEventListener("click", () => {
-        //var user = model["Name"]
         var message = document.getElementById("userToMessage").value;
         var userToID = parseInt(document.getElementById("userToID").value);
         var userToConnectionID = document.getElementById("userToConnectionID").value;
@@ -35,6 +32,24 @@
             return console.error(err.toString());
         })
         event.preventDefault();
+
+        const url = '/Chat/sendPrivateMessage';
+        const data = {
+            senderID: document.getElementById("userID").value,
+            receiverID: userToID,
+            text: message
+        }
+
+        $.ajax({
+            url: url,
+            type: 'GET',
+            data: data,
+            success: function (response) {
+                console.log(response);
+            },
+            error: function (err) {
+            }
+        });
     });
 
     connection.on("ReceivePrivateMessage", (message) => {

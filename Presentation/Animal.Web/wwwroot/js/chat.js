@@ -17,7 +17,7 @@ connection.on("UserJoins", (id, username, connectionId) => {
     node.setAttribute("id", `${username}user`)
     var anchor = document.createElement("a")
     anchor.setAttribute("class", "d-inline nav-link text-dark")
-    anchor.setAttribute("href", `javascript:AjaxPost('./Chat/PrivateChat', '?id=${id}&username=${username}&connectionID=${connectionId}')`)
+    anchor.setAttribute("href", `javascript:AjaxPost('./Chat/PrivateChat', {id:${id}, username:'${username}', connectionID:'${connectionId}'})`)
     anchor.textContent = username
     node.appendChild(anchor)
     document.getElementById("userList").appendChild(node)
@@ -45,16 +45,32 @@ document.getElementById("sendButton").addEventListener("click", () => {
         return console.error(err.toString());
     })
     event.preventDefault();
+
+    const url = '/Chat/sendGlobalMessage';
+    const data = {
+        senderID: document.getElementById("userID").value,
+        text: message
+    }
+
+    $.ajax({
+        url: url,
+        type: 'GET',
+        data: data,
+        success: function (response) {
+            console.log(response);
+        },
+        error: function (err) {
+        }
+    });
 });
 
 //// PRIVATE MESSAGES
 
-function AjaxPost(url, parameters) {
-
+function AjaxPost(url, data) {
     $.ajax({
-        url: url+parameters,
+        url: url,
         type: 'GET',
-        dataType: "html",
+        data: data,
         success: function (response) {
             $(`#level${divNum}`).attr("hidden", "hidden")
             divNum++;

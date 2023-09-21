@@ -18,7 +18,7 @@ namespace Animal.Web.Controllers
 			var obj = new AnimalProvider.Message();
 			List<Entities.Message> messages = obj.getGlobalMessages();
 
-			var tuple = new Tuple<List<Entities.Message>, List<HubCallerContext>>(messages, ChatHub.users);
+			var tuple = new Tuple<List<Entities.Message>, List<HubCallerContext>, Entities.User>(messages, ChatHub.users, CurrentUser);
 
             return View(tuple);
 		}
@@ -32,5 +32,31 @@ namespace Animal.Web.Controllers
 
 			return View(tuple);
 		}
+
+		public IActionResult sendGlobalMessage(int senderID, string text)
+		{
+            using var obj = new AnimalProvider.Message();
+            if (obj.sendGlobalMessage(senderID, text))
+            {
+                return Ok("sent");
+            }
+            else
+            {
+                return BadRequest("an error has occured");
+            }
+        }
+
+        public IActionResult sendPrivateMessage(int senderID, int receiverID, string text)
+		{
+            using var obj = new AnimalProvider.Message();
+            if (obj.sendPrivateMessage(senderID, receiverID, text))
+            {
+                return Ok("Message sent");
+            }
+            else
+            {
+                return BadRequest("an error has occured");
+            }
+        }
 	}
 }

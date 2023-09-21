@@ -22,7 +22,6 @@ namespace Animal.Web.Hubs
         {
             await Clients.All.SendAsync("ReceiveMessage", $"{Context.Items["username"]}: {message}");
 
-            //var obj = new AnimalProvider.Message();
             //obj.sendGlobalMessage((int)Context.Items["id"], message);                 
 		}
         public override async Task OnDisconnectedAsync(Exception? exception)
@@ -38,7 +37,6 @@ namespace Animal.Web.Hubs
             await Clients.Caller.SendAsync("ReceivePrivateMessage", $"{Context.Items["username"]}: {message}");
             await Clients.Client(toUserConnectionID).SendAsync("ReceivePrivateMessage", $"{Context.Items["username"]}: {message}");
 
-            //using var obj = new AnimalProvider.Message();
             //obj.sendPrivateMessage((int)Context.Items["id"], toUserID, message);
         }
 
