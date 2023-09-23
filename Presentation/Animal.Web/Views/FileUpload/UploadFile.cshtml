@@ -2,33 +2,12 @@
 @using Animal.Web.MediaComponents
 
 
-@using (Html.BeginForm("UploadFile", "FileUpload", FormMethod.Post, new { enctype = "multipart/form-data", onSubmit = "formSubmit(this, event);" }))
+@using (Html.BeginForm("UploadFile", "FileUpload", FormMethod.Post, new { enctype = "multipart/form-data", onSubmit = $"formSubmit('{Url.Action("UploadFile", "FileUpload")}', this, event);" }))
 {
 	@Html.AntiForgeryToken()
 	<div>@Html.ValidationMessage("FormValidation")</div>
 
-	@Html.TextInput(m=>m.files)
+	@Html.FileInput(m=>m.files)
 
 	@Html.SubmitButton("Submit form")
 }
-
-
-<script>
-	function formSubmit(form, event) {
-		event.preventDefault();
-
-		$.ajax({
-			type: "POST",
-			url: '@Url.Action("UploadFile", "FileUpload")',
-			data: new FormData(form),
-			contentType: false,
-			processData: false,
-			success: function (data) {
-				$("main").html(data);
-			},
-			error: function (err) {
-				console.error(err);
-			}
-		});
-	}
-</script>

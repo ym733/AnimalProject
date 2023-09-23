@@ -1,8 +1,8 @@
-﻿@model Entities.Animal
+﻿@model ViewModel.Animal
 @using Animal.Web.MediaComponents
 
 
-@using (Html.BeginForm("UpdateAnimal", "Animal", FormMethod.Post, new { enctype = "multipart/form-data", onSubmit = "formSubmit(this, event);" }))
+@using (Html.BeginForm("UpdateAnimal", "Animal", FormMethod.Post, new { enctype = "multipart/form-data", onSubmit = $"formSubmit('{Url.Action("UpdateAnimal", "Animal")}', this, event);" }))
 {
 	@Html.AntiForgeryToken()
 	<div>@Html.ValidationMessage("FormValidation")</div>
@@ -13,28 +13,7 @@
 
 	@Html.TextInput(m=>m.age)
 
-	@Html.TextInput(m=>m.CategoryName)
+	@Html.TextInput(m=>m.CategoryID)
 
 	@Html.SubmitButton("Submit form")
 }
-
-
-<script>
-	function formSubmit(form, event) {
-		event.preventDefault();
-
-		$.ajax({
-			type: "POST",
-			url: '@Url.Action("UpdateAnimal", "Animal")',
-			data: new FormData(form),
-			contentType: false,
-			processData: false,
-			success: function (data) {
-				$("main").html(data);
-			},
-			error: function (err) {
-				console.error(err);
-			}
-		});
-	}
-</script>

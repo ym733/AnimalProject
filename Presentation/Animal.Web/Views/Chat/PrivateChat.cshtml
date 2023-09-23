@@ -25,9 +25,6 @@
         var userToID = parseInt(document.getElementById("userToID").value);
         var userToConnectionID = document.getElementById("userToConnectionID").value;
 
-        console.log("invoked1")
-        console.log(`${userToID}, ${userToConnectionID}, ${message}`)
-
         connection.invoke("SendPrivateMessage", userToID, userToConnectionID, message).catch((err) => {
             return console.error(err.toString());
         })
@@ -53,9 +50,6 @@
     });
 
     connection.on("ReceivePrivateMessage", (message) => {
-        console.log("invoked2")
-        console.log(message)
-
         var li = document.createElement("li");
         li.textContent = message;
         document.getElementById("privateMessagesList").appendChild(li);
