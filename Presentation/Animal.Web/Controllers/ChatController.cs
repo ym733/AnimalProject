@@ -1,8 +1,6 @@
 ﻿using Animal.Web.Hubs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace Animal.Web.Controllers
 {
@@ -15,10 +13,10 @@ namespace Animal.Web.Controllers
 		}
 		public IActionResult Index()
 		{
-			var obj = new AnimalProvider.Message();
-			List<Entities.Message> messages = obj.getGlobalMessages();
+			using var obj = new AnimalProvider.Message();
+            List<Entities.Message> messages = obj.getGlobalMessages();
 
-			var tuple = new Tuple<List<Entities.Message>, List<HubCallerContext>, Entities.User>(messages, ChatHub.users, CurrentUser);
+			var tuple = new Tuple<List<Entities.Message>, Entities.User>(messages, CurrentUser);
 
             return View(tuple);
 		}
@@ -28,7 +26,7 @@ namespace Animal.Web.Controllers
 			var obj = new AnimalProvider.Message();
 			List<Entities.PrivateMessage> messages = obj.getPrivateMessages(CurrentUser.Id, id);
 
-			var tuple = new Tuple<List<Entities.PrivateMessage>, int, string, string>(messages, id, username, connectionID);
+			var tuple = new Tuple<List<Entities.PrivateMessage>, int, string, string?, int>(messages, id, username, connectionID, CurrentUser.Id);
 
 			return View(tuple);
 		}
@@ -58,5 +56,32 @@ namespace Animal.Web.Controllers
                 return BadRequest("an error has occured");
             }
         }
-	}
+
+        public IActionResult sideBar()
+        {
+            List<string> onlineUsernames = new List<string>();
+            onlineUsernames.Add(CurrentUser.Name);
+
+            foreach (var user in ChatHub.users)
+            {
+                onlineUsernames.Add((string)user.Items["username"]);
+            }
+
+            using var obj = new AnimalProvider.Users();
+            List<Entities.User> users = obj.getAllUsers();
+
+            List<Entities.User> offlineUsers = new List<Entities.User>();
+            foreach (var item in users)
+            {
+                if (!onlineUsernames.Contains(item.Name))
+                {
+                    offlineUsers.Add(item);
+                }
+            }
+
+            var tuple = new Tuple<List<HubCallerContext>, List<Entities.User>>(ChatHub.users, offlineUsers);
+
+            return PartialView(tuple);
+        }
+    }
 }

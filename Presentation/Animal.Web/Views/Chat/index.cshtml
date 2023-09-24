@@ -1,4 +1,4 @@
-﻿@model Tuple<List<Entities.Message>, List<HubCallerContext>, Entities.User>
+﻿@model Tuple<List<Entities.Message>, Entities.User>
 @using Animal.Web.MediaComponents;
 @using Microsoft.AspNetCore.SignalR;
 
@@ -15,16 +15,7 @@
 </style>
 
 <div id="sidebar" class="position-absolute hidden">
-    <ul id="userList">
-        <li id="offline" @(Model.Item2.Count != 0 ? "hidden" : "")>NO USERS ONLINE</li>
-
-        @foreach (var item in Model.Item2)
-        {
-            <li id="@item.Items["username"]user">
-                <a class="nav-link text-dark" href="javascript:AjaxPost('@Url.Action("PrivateChat", "Chat")', {id:@item.Items["id"], username:'@item.Items["username"]', connectionID:'@item.ConnectionId'})">@item.Items["username"]</a>
-            </li>
-        }
-    </ul>
+    
 </div>
 
 <button class="border-0 rounded d-flex fw-bold" style="background-color: #f2f2f2; padding: 10px 15px;" onclick="document.querySelector('#sidebar').classList.toggle('hidden');">
@@ -36,7 +27,7 @@
     @Html.SingleStringInput("userMessage")
 
     <input type="button" id="sendButton" value="send message">
-    <input id="userID" value="@Model.Item3.Id" hidden="hidden"/>
+    <input id="userID" value="@Model.Item2.Id" hidden="hidden"/>
 
     <hr />
 
@@ -49,4 +40,4 @@
 </div>
 
 <script src="~/js/dist/browser/signalr.js"></script>
-<script src="~/js/chat.js"></script>
+<script src="~/js/chat.js" defer></script>

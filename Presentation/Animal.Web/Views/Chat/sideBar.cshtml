@@ -1,0 +1,25 @@
+﻿@model Tuple<List<HubCallerContext>, List<Entities.User>>
+@using Microsoft.AspNetCore.SignalR;
+
+@*
+    online users  => Model.Item1
+    offline users => Model.Item2
+*@
+
+<ul id="userList">
+    <li class="" id="offline" @(Model.Item1.Count != 0 ? "hidden" : "")>NO USERS ONLINE</li>
+
+    @foreach (var item in Model.Item1)
+    {
+        <li id="@item.Items["username"]user">
+            <a class="d-inline nav-link text-success" href="javascript:AjaxPost('@Url.Action("PrivateChat", "Chat")', {id:@item.Items["id"], username:'@item.Items["username"]', connectionID:'@item.ConnectionId'})">@item.Items["username"]</a>
+        </li>
+    }
+
+    @foreach (var item in Model.Item2)
+    {
+        <li id="@{@item.Name}user">
+            <a class="d-inline nav-link text-danger" href="javascript:AjaxPost('@Url.Action("PrivateChat", "Chat")', {id:@item.Id, username:'@item.Name', connectionID:null})">@item.Name</a>
+        </li>
+    }
+</ul>

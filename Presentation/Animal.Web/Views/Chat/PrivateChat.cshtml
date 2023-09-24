@@ -1,57 +1,61 @@
-﻿@model Tuple<List<Entities.PrivateMessage>, int, string, string>
+﻿@model Tuple<List<Entities.PrivateMessage>, int, string, string?, int>
 @using Microsoft.AspNetCore.SignalR;
 @using Animal.Web.MediaComponents;
 
 <div>
-    @Html.SingleStringInput("userToMessage")
+	@Html.SingleStringInput("userToMessage")
 
-    <input type="button" id="sendToButton" value="send message">
-    <input hidden="hidden" id="userToID" value='@Model.Item2' />
-    <input hidden="hidden" id="userToConnectionID" value='@Model.Item4' />
+	<input type="button" id="sendToButton" value="send message">
+	<input hidden="hidden" id="userToID" value='@Model.Item2' />
+	<input hidden="hidden" id="userToConnectionID" value='@Model.Item4' />
 
-    <hr />
+	<hr />
 
-    <ul id="privateMessagesList">
-        @foreach (var item in Model.Item1)
-        {
-            <li>@item.senderName: @item.text</li>
-        }
-    </ul>
+	<ul id="privateMessagesList">
+		@foreach (var item in Model.Item1)
+		{
+			<li>@item.senderName: @item.text</li>
+		}
+	</ul>
 </div>
 
 <script>
-    document.getElementById("sendToButton").addEventListener("click", () => {
-        var message = document.getElementById("userToMessage").value;
-        var userToID = parseInt(document.getElementById("userToID").value);
-        var userToConnectionID = document.getElementById("userToConnectionID").value;
+	var userToID = parseInt(document.getElementById("userToID").value);
+	var userToConnectionID = document.getElementById("userToConnectionID").value;
 
-        connection.invoke("SendPrivateMessage", userToID, userToConnectionID, message).catch((err) => {
-            return console.error(err.toString());
-        })
-        event.preventDefault();
+	document.getElementById("sendToButton").addEventListener("click", () => {
+		var message = document.getElementById("userToMessage").value;
 
-        const url = '/Chat/sendPrivateMessage';
-        const data = {
-            senderID: document.getElementById("userID").value,
-            receiverID: userToID,
-            text: message
-        }
+		connection.invoke("SendPrivateMessage", parseInt(userToID), (userToConnectionID !== '') ? userToConnectionID : null, message).catch((err) => {
+			return console.error(err.toString());
+		})
 
-        $.ajax({
-            url: url,
-            type: 'GET',
-            data: data,
-            success: function (response) {
-                console.log(response);
-            },
-            error: function (err) {
-            }
-        });
-    });
+		const url = '/Chat/sendPrivateMessage';
+		const data = {
+			senderID: document.getElementById("userID").value,
+			receiverID: userToID,
+			text: message
+		}
 
-    connection.on("ReceivePrivateMessage", (message) => {
-        var li = document.createElement("li");
-        li.textContent = message;
-        document.getElementById("privateMessagesList").appendChild(li);
-    });
+		$.ajax({
+			url: url,
+			type: 'GET',
+			data: data,
+			success: function (response) {
+				console.log(response);
+			},
+			error: function (err) {
+				console.error(err)
+			}
+		});
+
+	});
+
+	connection.on("ReceivePrivateMessage", (id, message) => {
+		if(@Model.Item5 != id && userToID != id) return;
+
+		var li = document.createElement("li");
+		li.textContent = message;
+		document.getElementById("privateMessagesList").appendChild(li);
+	});
 </script>

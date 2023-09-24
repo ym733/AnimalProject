@@ -9,25 +9,11 @@ connection.on("ReceiveMessage", (message) => {
 });
 
 connection.on("UserJoins", (id, username, connectionId) => {
-    if (document.getElementById("userList").childElementCount == 1) {
-        document.getElementById("offline").setAttribute("hidden", "hidden")
-    }
-
-    var node = document.createElement("li")
-    node.setAttribute("id", `${username}user`)
-    var anchor = document.createElement("a")
-    anchor.setAttribute("class", "d-inline nav-link text-dark")
-    anchor.setAttribute("href", `javascript:AjaxPost('./Chat/PrivateChat', {id:${id}, username:'${username}', connectionID:'${connectionId}'})`)
-    anchor.textContent = username
-    node.appendChild(anchor)
-    document.getElementById("userList").appendChild(node)
+    sidebarAjax();
 });
 
 connection.on("UserLeaves", (user) => {
-    if (document.getElementById("userList").childElementCount == 2) {
-        document.getElementById("offline").removeAttribute("hidden")
-    }
-    document.getElementById(`${user}user`).remove()
+    sidebarAjax();
 });
 
 connection.start().then(() => {
@@ -60,9 +46,30 @@ document.getElementById("sendButton").addEventListener("click", () => {
             console.log(response);
         },
         error: function (err) {
+            console.error(err)
         }
     });
 });
+
+window.addEventListener('popstate', function (event) {
+    connection.stop()
+});
+
+function sidebarAjax() {
+    //console.log("executed")
+    $.ajax({
+        url: '/Chat/sideBar',
+        type: 'GET',
+        success: function (response) {
+            //console.log(response)
+            $('#sidebar').html(response)
+        },
+        error: function (err) {
+        }
+    });
+}
+
+sidebarAjax();
 
 //// PRIVATE MESSAGES
 
