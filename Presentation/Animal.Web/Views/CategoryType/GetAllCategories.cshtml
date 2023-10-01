@@ -4,7 +4,7 @@
 	<thead>
 	<th class="p-3">ID</th>
 	<th class="p-3">Name</th>
-	<th class="p-3">ImagePath</th>
+	<th class="p-3">Image</th>
 	</thead>
 
 	@{
@@ -13,7 +13,7 @@
 			<tr>
 				<td class="p-3">@item.Id</td>
 				<td class="p-3">@item.CategoryName</td>
-				<td class="p-3">@item.ImagePath</td>
+				<td class="p-3">to view image click on: view model</td>
 				<td class="p-3">
 					<a class="text-dark" href="javascript:changeMain('@Url.Action("GetCategoryType", "CategoryType", new {id = item.Id})');">view model</a>
 				</td>

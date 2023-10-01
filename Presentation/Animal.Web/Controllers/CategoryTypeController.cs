@@ -55,8 +55,16 @@ namespace Animal.Web.Controllers
 			{
 				using var obj = new AnimalProvider.CategoryType();
 
-				string pathToDirectory = _webHostEnvironment.ContentRootPath + "\\FileUploads\\";
-				string pathToFile = pathToDirectory + String.Format("{0}.{1}", DateTimeOffset.Now.ToUnixTimeMilliseconds(), CategoryType.files.ContentType.Split("/")[1]);
+				if (CategoryType.files.ContentType.Split("/")[1] != "png")
+				{
+					ModelState.AddModelError("FormValidation", "wrong file type. file type should be png");
+					return View(CategoryType);
+				}
+
+				string pathToDirectory = _webHostEnvironment.WebRootPath + "\\FileUploads\\";
+				string fileName = $"{DateTimeOffset.Now.ToUnixTimeMilliseconds()}.{CategoryType.files.ContentType.Split("/")[1]}";
+				string pathToFile = pathToDirectory + fileName;
+				string relativePathToFile = "\\FileUploads\\" + fileName;
 				//(DateTimeOffset.Now.ToUnixTimeSeconds()) should return the current unix time in milliseconds
 				//(CategoryType.files.ContentType.Split("/")[1]) should return "png" as in the extension of the image
 
@@ -90,7 +98,7 @@ namespace Animal.Web.Controllers
 				Entities.CategoryType modelSent = new Entities.CategoryType();
 				modelSent.Id = CategoryType.Id;
 				modelSent.CategoryName = CategoryType.CategoryName;
-				modelSent.ImagePath = pathToFile;
+				modelSent.ImagePath = relativePathToFile;
 
 				if (obj.addCategoryType(modelSent))
 				{
@@ -108,7 +116,7 @@ namespace Animal.Web.Controllers
 			{
 				return View(CategoryType);
 			}
-			
+
 		}
 
 		[HttpGet]
@@ -125,12 +133,20 @@ namespace Animal.Web.Controllers
 			{
 				using var obj = new AnimalProvider.CategoryType();
 
+				if (CategoryType.files.ContentType.Split("/")[1] != "png")
+				{
+					ModelState.AddModelError("FormValidation", "wrong file type. file type should be png");
+					return View(CategoryType);
+				}
+
 				//to delete the current categorytype image currently stored
 				Entities.CategoryType prevInstance = obj.getCategoryType(CategoryType.Id);
 				System.IO.File.Delete(prevInstance.ImagePath);
 
-				string pathToDirectory = _webHostEnvironment.ContentRootPath + "\\FileUploads\\";
-				string pathToFile = pathToDirectory + String.Format("{0}.{1}", DateTimeOffset.Now.ToUnixTimeMilliseconds(), CategoryType.files.ContentType.Split("/")[1]);
+				string pathToDirectory = _webHostEnvironment.WebRootPath + "\\FileUploads\\";
+				string fileName = $"{DateTimeOffset.Now.ToUnixTimeMilliseconds()}.{CategoryType.files.ContentType.Split("/")[1]}";
+				string pathToFile = pathToDirectory + fileName;
+				string relativePathToFile = "\\FileUploads\\" + fileName;
 				//(DateTimeOffset.Now.ToUnixTimeSeconds()) should return the current unix time in milliseconds
 				//(CategoryType.files.ContentType.Split("/")[1]) should return "png" as in the extension of the image
 
@@ -164,7 +180,7 @@ namespace Animal.Web.Controllers
 				Entities.CategoryType modelSent = new Entities.CategoryType();
 				modelSent.Id = CategoryType.Id;
 				modelSent.CategoryName = CategoryType.CategoryName;
-				modelSent.ImagePath = pathToFile;
+				modelSent.ImagePath = relativePathToFile;
 
 				if (obj.updateCategoryType(modelSent))
 				{

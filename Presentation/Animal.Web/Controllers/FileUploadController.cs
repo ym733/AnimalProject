@@ -37,7 +37,7 @@ namespace Animal.Web.Controllers
 				{
 					if (fileUpload.files.Length > 0)
 					{
-						string path = _webHostEnvironment.ContentRootPath + "\\FileUploads\\";
+						string path = _webHostEnvironment.WebRootPath + "\\FileUploads\\";
 						if (!Directory.Exists(path))
 						{
 							Directory.CreateDirectory(path);
@@ -82,7 +82,7 @@ namespace Animal.Web.Controllers
 		{
 			if(ModelState.IsValid)
 			{
-				string path = _webHostEnvironment.ContentRootPath + "\\FileUploads\\";
+				string path = _webHostEnvironment.WebRootPath + "\\FileUploads\\";
 				string filePath = path + FileName;
 
 				if (System.IO.File.Exists(filePath))

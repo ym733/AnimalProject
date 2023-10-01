@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\FileUploads\1696188609018.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\Core\ClassLibrary1\Core.csproj" />
     <ProjectReference Include="..\..\Data\DataAccess\DataAccess.csproj" />
     <ProjectReference Include="..\..\Data\Models\Entities.csproj" />
@@ -16,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="FileUploads\" />
+    <Folder Include="wwwroot\FileUploads\" />
   </ItemGroup>
 
   <ItemGroup>
