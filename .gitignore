@@ -364,3 +364,4 @@ FodyWeavers.xsd
 
 #sensitive data
 appsettings.json
+/Presentation/Animal.Web/wwwroot/FileUploads
