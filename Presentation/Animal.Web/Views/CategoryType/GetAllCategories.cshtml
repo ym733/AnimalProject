@@ -13,7 +13,7 @@
 			<tr>
 				<td class="p-3">@item.Id</td>
 				<td class="p-3">@item.CategoryName</td>
-				<td class="p-3">to view image click on: view model</td>
+				<td class="p-3"><img style="width:30px;height:30px;" src="@item.ImagePath" /></td>
 				<td class="p-3">
 					<a class="text-dark" href="javascript:changeMain('@Url.Action("GetCategoryType", "CategoryType", new {id = item.Id})');">view model</a>
 				</td>
