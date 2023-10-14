@@ -73,7 +73,10 @@ namespace Animal.Web.Controllers
 		[HttpGet]
 		public IActionResult GetFile()
 		{
-			return View();
+			string path = _webHostEnvironment.WebRootPath + "\\FileUploads\\";
+			string[] files = Directory.GetFiles(path);
+
+			return View(files);
 		}
 
 		[HttpPost]
@@ -82,8 +85,7 @@ namespace Animal.Web.Controllers
 		{
 			if(ModelState.IsValid)
 			{
-				string path = _webHostEnvironment.WebRootPath + "\\FileUploads\\";
-				string filePath = path + FileName;
+				string filePath = FileName;
 
 				if (System.IO.File.Exists(filePath))
 				{
