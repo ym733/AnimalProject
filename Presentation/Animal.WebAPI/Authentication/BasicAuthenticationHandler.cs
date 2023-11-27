@@ -1,9 +1,15 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using Animal.Web.MediaComponents;
+using Entities;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using System.Reflection;
 using System.Security.Claims;
 using System.Text;
 using System.Text.Encodings.Web;
+using System.Web.Http.ModelBinding;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Animal.WebAPI.Authentication
 {
@@ -53,14 +59,19 @@ namespace Animal.WebAPI.Authentication
 
             //check DB if this Username and password are correct ? will return User Data: error message;
             using var obj = new AnimalProvider.Users();
-            Entities.User? DBobject = obj.getUserByInfo(userName, userSecret);
+            Entities.User? DBobject = obj.getUserByInfo(userName);
 
             if(DBobject == null)
-            {
-                return Task.FromResult(AuthenticateResult.Fail("UserName or Password is incorrect"));
-            }
+			{
+				return Task.FromResult(AuthenticateResult.Fail("UserName is incorrect"));
+			}
 
-            var client = new BasicAuthenticationClient
+			if (!(new PasswordHasher().verify(DBobject.password, userSecret)))
+			{
+			    return Task.FromResult(AuthenticateResult.Fail("Password is incorrect"));
+			}
+
+				var client = new BasicAuthenticationClient
             {
                 AuthenticationType = BasicAuthenticationDefaults.AuthenticationScheme,
                 IsAuthenticated = true,

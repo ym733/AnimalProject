@@ -13,5 +13,6 @@ namespace Entities
         public string Email { get; set; }
         public string DateOfBirth { get; set; }
         public string role { get; set; }
+        public string password { get; set; }
     }
 }

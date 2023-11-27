@@ -33,6 +33,7 @@
     <ProjectReference Include="..\..\Data\DataAccess\DataAccess.csproj" />
     <ProjectReference Include="..\..\Data\Models\Entities.csproj" />
     <ProjectReference Include="..\..\Provider\AnimalProvider\AnimalProvider.csproj" />
+    <ProjectReference Include="..\Animal.Web\Animal.Web.csproj" />
   </ItemGroup>
 
 </Project>

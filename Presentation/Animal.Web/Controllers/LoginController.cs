@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using Animal.Web.MediaComponents;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -18,11 +19,17 @@ namespace Animal.Web.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				var data = new AnimalProvider.Users().getUserByInfo(model.Name, model.Password);
+				var data = new AnimalProvider.Users().getUserByInfo(model.Name);
 
 				if (data == null)
 				{
-					ModelState.AddModelError("FormValidation", "Wrong Username or Password");
+					ModelState.AddModelError("FormValidation", "Wrong Username");
+					return View(model);
+				}
+
+				if (!(new PasswordHasher().verify(data.password, model.Password)))
+				{
+					ModelState.AddModelError("FormValidation", "Wrong Password");
 					return View(model);
 				}
 
@@ -73,9 +80,11 @@ namespace Animal.Web.Controllers
 			if (ModelState.IsValid)
 			{
 				using var obj = new AnimalProvider.Users();
+				model.Password = new PasswordHasher().hash(model.Password);
+
 				if (obj.registerUser(model))
 				{
-					var data = new AnimalProvider.Users().getUserByInfo(model.Name, model.Password);
+					var data = new AnimalProvider.Users().getUserByInfo(model.Name);
 
 					var varClaims = new ClaimsPrincipal(new ClaimsIdentity(new[]
 					{

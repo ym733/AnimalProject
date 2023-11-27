@@ -22,13 +22,12 @@ namespace AnimalProvider
             return DAL.ExecuteReader<Entities.User>("Animal.spGetUser").FirstOrDefault();
         }
 
-        public Entities.User getUserByInfo(string name, string password)
+        public Entities.User getUserByInfo(string name)
         {
             using var DAL = new DataAccess.DataAccessLayer();
             DAL.Parameters = new List<SqlParameter>
                 {
-                    new SqlParameter{ ParameterName = "@Name", Value = name },
-                    new SqlParameter{ ParameterName = "@Password", Value = password }
+                    new SqlParameter{ ParameterName = "@Name", Value = name }
             };
 
             return DAL.ExecuteReader<Entities.User>("Animal.spGetUserByInfo").FirstOrDefault();
